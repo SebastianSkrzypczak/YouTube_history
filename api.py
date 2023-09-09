@@ -21,16 +21,16 @@ def get_videos_info(video_ids) -> json:
         return []
 
 
-def get_channel_info():
+def get_channels_info(channels_ids):
     try:
-        response = youtube.channels().list(part='snippet,statistics,brandingSettings,contentDetails', id='UCsFfolMaE4DsBATPVwu3pkQ').execute()
+        response = youtube.channels().list(part='snippet,statistics,brandingSettings,contentDetails', id=','.join(channels_ids)).execute()
     except Exception:
         print('except')
     if response.get('items'):
         formatted_json = response.get('items')
-        print(formatted_json)
+        return formatted_json
     else:
-        print('else')
+        return []
 
 
 def main():

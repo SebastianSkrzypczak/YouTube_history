@@ -4,7 +4,8 @@ from datetime import datetime
 # from typing import TypeVar, Generic
 import json
 import logging
-import services
+import api
+import pandas as pd
 
 
 @dataclass
@@ -25,9 +26,9 @@ class Video:
         if video_data is not []:
 
             self.videoId = video_data.get('id')
-            self.title = video_data.get('title')
 
             snippet = video_data.get('snippet')
+            self.title = snippet.get('title')
             self.publishedAt = snippet.get('publishedAt')
             self.channelId = snippet.get('channelId')
             self.categoryId = snippet.get('categoryId')
@@ -39,21 +40,38 @@ class Video:
             self.viewCount = statistics.get('viewCount')
             self.likeCount = statistics.get('likeCount')
 
-    def __str__(self):
-        return (f'{self.videoId}\n{self.publishedAt}\n{self.channelId}')    
+    def __repr__(self):
+        return (f'{self.title}')
 
 
 @dataclass
 class Channel:
     '''Dataclass to store info about single channel'''
 
-    channelId: str
-    title: str
-    publishedAt: datetime
-    viewCount: int
-    subscriberCount: int
-    videoCount: int
+    channelId: str = None
+    title: str = None
+    publishedAt: datetime = None
+    viewCount: int = None
+    subscriberCount: int = None
+    videoCount: int = None
     # banner
+
+    def add(self, channel_data: json):
+        if channel_data is not []:
+
+            self.channelId = channel_data.get('id')
+
+            snippet = channel_data.get('snippet')
+            self.title = snippet.get('title')
+            self.publishedAt = snippet.get('publishedAt')
+
+            statistics = channel_data.get('statistics')
+            self.viewCount = statistics.get('viewCont')
+            self.subscriberCount = statistics.get('subscriberCount')
+            self.videoCount = statistics.get('videoCount')
+
+    def __repr__(self) -> str:
+        return self.title
 
 
 class Repository(ABC):
@@ -83,33 +101,42 @@ class WatchHistory(Repository):
     def __init__(self, dataStorage: DataStorage) -> None:
         self.urls: list[str] = []
         self.times: list[str] = []
+        self.channelsIds: list[str] = []
         self.videos: dict[datetime: Video] = {}
+        self.channels: dict[str: Channel] = {}
         self.dataStorage = dataStorage
 
-    def load_urls_and_times(self):
+    def load(self):
+
         json_data = self.dataStorage.read()
         index = 0
         for record in json_data:
-            url = record.get('titleUrl', '').split('=')[1]
+            url = record.get('titleUrl', '=').split('=')[1]
             if url == '':
-                break
+                continue
+                #TODO: deleted videos
             self.urls.append(url)
             time = record.get('time', '')
             self.times.append(time)
+            channelId = record.get('subtitles')[0].get('url', 'channel/').split('channel/')[1]
+            self.channelsIds.append(channelId)
             index += 1
             if index >= 10:
                 break
 
     def add(self) -> None:
 
-        self.load_urls_and_times()
-        data = services.get_videos_info(self.urls)
-        index = 0
-        for element in data:
+        self.load()
+        videos_data = api.get_videos_info(self.urls)
+        for element in videos_data:
             video = Video()
             video.add(element)
-            self.videos[self.times[index]] = video
-            index += 1
+            self.videos[video.videoId] = video
+        channels_data = api.get_channels_info(self.channelsIds)
+        for element in channels_data:
+            channel = Channel()
+            channel.add(element)
+            self.channels[channel.channelId] = channel
 
     def __iter__(self):
         return iter(self.videos)
@@ -121,10 +148,12 @@ class WatchHistory(Repository):
         return str
 
 
+
 def main():
     dataStorage = DataStorage('history.json')
     history = WatchHistory(dataStorage=dataStorage)
     history.add()
+    history = pd.read_json('history.json')
     print(history)
 
 
