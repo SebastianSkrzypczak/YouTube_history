@@ -152,10 +152,14 @@ class WatchHistory(Repository):
         self.load()
         video_urls = list(filter(None, self.watch_history['titleUrl']))
         channel_urls = list(filter(None, self.watch_history['url']))
-        videos_data = api.get_videos_info(video_urls[0:50])
-        channels_data = api.get_channels_info(channel_urls[0:50])
         self.videos = Videos()
-        self.videos.add(videos_data)
+        for i in range(50, 10000, 51):
+            videos_data = api.get_videos_info(video_urls[i-50:i])
+            print(i)
+            self.videos.add(videos_data)
+        channels_data = api.get_channels_info(channel_urls[0:50])
+        
+        
 
 
 def main():

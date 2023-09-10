@@ -5,6 +5,7 @@ import logic
 def main():
     history = data.WatchHistory()
     history.add()
+    #print(history.videos.content)
     print(logic.calculate_total_watch_time(history.videos))
     print(logic.show_most_viewed_videos(history.videos))
     print(logic.show_most_viewed_channels(history.videos))
@@ -12,3 +13,5 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+# TODO: multiprocessing
