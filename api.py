@@ -8,12 +8,7 @@ youtube = build('youtube', 'v3', developerKey=API_KEY)
 
 
 def get_videos_info(video_ids) -> json:
-    #try:
-    #print(video_ids)
     response = youtube.videos().list(part='snippet,contentDetails,statistics', id=','.join(video_ids)).execute()
-    #except Exception:
-    #print(f'fff: {response}')
-        #return False
     if response.get('items'):
         formatted_json = response.get('items')
         return formatted_json
@@ -22,10 +17,7 @@ def get_videos_info(video_ids) -> json:
 
 
 def get_channels_info(channels_ids):
-    try:
-        response = youtube.channels().list(part='snippet,statistics,brandingSettings,contentDetails', id=','.join(channels_ids)).execute()
-    except Exception:
-        print('except')
+    response = youtube.channels().list(part='snippet,statistics,brandingSettings,contentDetails', id=','.join(channels_ids)).execute()
     if response.get('items'):
         formatted_json = response.get('items')
         return formatted_json
@@ -39,3 +31,5 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+# TODO: Exceptions and ErrorsHandlig
