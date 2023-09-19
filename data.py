@@ -13,10 +13,14 @@ inspector = inspect(engine)
 
 
 def extract_any(column: json, extracted_field: str):
+    '''Function extracting any column from json data'''
+
     return column.get(extracted_field)
 
 
 def iso8601_to_timedelta(time: str):
+    '''Function converting iso8601 format to python timedelta'''
+
     time = time.strip('PT')
     if 'DT' in time:
         days = time.split('DT')[0]
@@ -48,6 +52,7 @@ def iso8601_to_timedelta(time: str):
 
 class Videos:
     '''Dataclass to store info about single video'''
+
     def __init__(self,) -> None:
         self.content = pd.DataFrame(columns=[
                                             'id',
@@ -67,6 +72,7 @@ class Videos:
 
 class Channels:
     '''Dataclass to store info about single channel'''
+
     def __init__(self) -> None:
         self.channels = None
         self.columns = [
@@ -99,6 +105,7 @@ class DataStorage(ABC):
 
 
 class JSONFIle(DataStorage):
+    '''Class to handle JSON files'''
 
     def __init__(self, file) -> None:
         self.file = file
@@ -115,6 +122,8 @@ class JSONFIle(DataStorage):
 
 
 class SQLFile(DataStorage):
+    '''Class to handle SQL manipulation'''
+
     def __init__(self) -> None:
         pass
 
