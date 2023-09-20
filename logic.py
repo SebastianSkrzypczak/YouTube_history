@@ -1,7 +1,7 @@
 import data
 from datetime import timedelta, datetime
 import pandas as pd
-from icecream import ic 
+from icecream import ic
 
 
 def filter_videos_by(column_name: str, videos: pd.DataFrame, categories: list, exclude: bool) -> pd.DataFrame:
@@ -12,16 +12,14 @@ def filter_videos_by(column_name: str, videos: pd.DataFrame, categories: list, e
     return videos_filtered
 
 
-def filter_videos_by_date(column_name: str, start_date: datetime, end_date: datetime, videos: pd.DataFrame, exclude = False):
-    start_date = pd.to_datetime(start_date)
-    end_date = pd.to_datetime(start_date)
-    if exclude is False:
-        ic(videos[column_name])
-        videos_filtered = videos[end_date > videos[column_name] > start_date]
+def filter_videos_by_date(column_name: str, start_date: datetime, end_date: datetime, videos: pd.DataFrame, exclude=False):
+    start_date = pd.to_datetime(start_date).tz_localize('UTC')
+    end_date = pd.to_datetime(end_date).tz_localize('UTC')
+    if not exclude:
+        videos_filtered = videos[(videos[column_name] >= start_date) & (videos[column_name] <= end_date)]
     else:
-        videos_filtered = videos[start_date > videos[column_name] or end_date < videos[column_name]]
+        videos_filtered = videos[(videos[column_name] < start_date) | (videos[column_name] > end_date)]
     return videos_filtered
-
 
 
 def any_analysis(analysis_by: str, history: pd.DataFrame, videos: pd.DataFrame,
@@ -80,12 +78,16 @@ def key_words_title():
 def statistics_in_time(history: pd.DataFrame, videos: pd.DataFrame, ):
     watch_history = history.copy()
     years = set(watch_history['time'].dt.year)
-    merged = history.merge(videos, left_on='titleUrl', right_on='id')
+    # merged = history.merge(videos, left_on='titleUrl', right_on='id')
     for year in years:
-        filtered_by_year = filter_videos_by_date(column_name='time', start_date=pd.to_datetime(str(year)),
-                                                 end_date=pd.to_datetime(str(year))-timedelta(days=1), videos=merged)
+        start_date=pd.to_datetime(str(year))
+        end_date=pd.to_datetime(str(year+1))-timedelta(days=1)
+        filtered_by_year = filter_videos_by_date(column_name='time',
+                                                 start_date=start_date,
+                                                 end_date=end_date,
+                                                 videos=watch_history)
         ic(filtered_by_year)
-    return watch_history
+    # return watch_history
 
 
 
