@@ -1,4 +1,5 @@
 import data
+import json
 from datetime import timedelta, datetime
 import pandas as pd
 from icecream import ic
@@ -54,17 +55,16 @@ def show_most_viewed_videos(history: pd.DataFrame, videos: pd.DataFrame, count: 
 def show_most_viewed_channels(history: pd.DataFrame, videos: pd.DataFrame, excluded_categories: list[str] = []):
     filtered_videos = filter_videos_by('categoryId', videos, excluded_categories, exclude=True)
     print(filtered_videos)
-    most_viewed_id = history['titleUrl'].value_counts().idxmax()
-    view_count = history['titleUrl'].value_counts().max()
-    return most_viewed_id, view_count
+    most_viewed = history['titleUrl'].value_counts().sort_index(ascending=False).head(10)
+    return most_viewed
 
 
 def time_activity_analysis(history: pd.DataFrame):
     '''On what time You watch the most movies'''
     watch_history = history.copy()
     watch_history['hours'] = watch_history['time'].dt.hour
-    hourly_count = dict(watch_history['hours'].value_counts().sort_index())
-    return hourly_count
+    hourly_count = watch_history['hours'].value_counts().sort_index()
+    return hourly_count.to_html()
 
 
 def average_video_duration(videos: data.Videos):
@@ -78,17 +78,25 @@ def key_words_title():
 def statistics_in_time(history: pd.DataFrame, videos: pd.DataFrame, ):
     watch_history = history.copy()
     years = set(watch_history['time'].dt.year)
-    # merged = history.merge(videos, left_on='titleUrl', right_on='id')
-    for year in years:
+    #watch_history_years = []
+    years_analytics = pd.DataFrame(columns=['year', 'title', 'count', 'total_watch_time'])
+    for index, year in enumerate(years):
+        ic(index)
         start_date=pd.to_datetime(str(year))
         end_date=pd.to_datetime(str(year+1))-timedelta(days=1)
         filtered_by_year = filter_videos_by_date(column_name='time',
                                                  start_date=start_date,
                                                  end_date=end_date,
                                                  videos=watch_history)
-        ic(filtered_by_year)
-    # return watch_history
-
+        # merged = filtered_by_year.merge(videos, left_on='titleUrl', right_on='id')
+        most_viewed_videos = show_most_viewed_videos(filtered_by_year, videos, count = 1)
+        total_watch_time = calculate_total_watch_time(filtered_by_year, videos)
+        new_row = {'year': year, 'title': most_viewed_videos['title'].values[0], 'count': most_viewed_videos['count'].values[0],'total_watch_time': total_watch_time}
+        years_analytics = pd.concat([years_analytics, pd.DataFrame([new_row])], ignore_index=True)
+        
+        # years_analytics = years_analytics.loc[len(years_analytics)] = new_row
+        #watch_history_years.append(filtered_by_year)
+    return years_analytics
 
 
 def average_break():
