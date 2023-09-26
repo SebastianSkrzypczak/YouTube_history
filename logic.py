@@ -42,7 +42,7 @@ def calculate_total_watch_time(history: pd.DataFrame, videos: pd.DataFrame, colu
     merged = history.merge(videos, left_on='titleUrl', right_on='id', how='inner')
     if column_name != "":
         merged = filter_videos_by(column_name, videos, categories, exclude)
-    return timedelta(seconds=merged['duration'].sum())
+    return merged['duration'].sum()
 
 
 def show_most_viewed_videos(history: pd.DataFrame, videos: pd.DataFrame, count: int, excluded_categories: list = [], channels: list = []) -> pd.DataFrame:
@@ -54,7 +54,6 @@ def show_most_viewed_videos(history: pd.DataFrame, videos: pd.DataFrame, count: 
 
 def show_most_viewed_channels(history: pd.DataFrame, videos: pd.DataFrame, excluded_categories: list[str] = []):
     filtered_videos = filter_videos_by('categoryId', videos, excluded_categories, exclude=True)
-    print(filtered_videos)
     most_viewed = history['titleUrl'].value_counts().sort_index(ascending=False).head(10)
     return most_viewed
 
@@ -64,11 +63,11 @@ def time_activity_analysis(history: pd.DataFrame):
     watch_history = history.copy()
     watch_history['hours'] = watch_history['time'].dt.hour
     hourly_count = watch_history['hours'].value_counts().sort_index()
-    return hourly_count.to_html()
+    return hourly_count
 
 
 def average_video_duration(videos: data.Videos):
-    return timedelta(seconds=videos.content['duration'].mean())
+    return videos.content['duration'].mean()
 
 
 def key_words_title():

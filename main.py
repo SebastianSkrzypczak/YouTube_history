@@ -10,7 +10,13 @@ templates = Jinja2Templates(directory='templates')
 
 @app.get('/')
 async def read_item(request: Request):
-    context = {'request': request, 'total': logic_.statistics_in_time}
+    context = {'request': request,
+               'API': {'total': logic_.total_watch_time,
+               'most_viewed_videos': logic_.most_viewed_videos,
+               'most_viewed_channels': logic_.most_viewed_channels,
+               'average': logic_.averagee_video_duration,
+               'statistics': logic_.statistics_in_time}
+               }
     return templates.TemplateResponse('index.html', context)
 
 
