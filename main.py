@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from starlette.requests import Request
 from starlette.templating import Jinja2Templates
 from manager import logic_
+import logging
 
 app = FastAPI()
 
@@ -11,12 +12,16 @@ templates = Jinja2Templates(directory='templates')
 @app.get('/')
 async def read_item(request: Request):
     context = {'request': request,
-               'API': {'total': logic_.total_watch_time,
+               'response': {'total': logic_.total_watch_time,
                'most_viewed_videos': logic_.most_viewed_videos,
                'most_viewed_channels': logic_.most_viewed_channels,
                'average': logic_.averagee_video_duration,
                'statistics': logic_.statistics_in_time}
                }
+
+    logger = logging.getLogger(__name__)
+    logger.info(context['response'])
+
     return templates.TemplateResponse('index.html', context)
 
 
