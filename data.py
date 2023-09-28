@@ -6,6 +6,7 @@ import json
 import logging
 import api
 import pandas as pd
+from icecream import ic
 
 
 engine = create_engine('sqlite:///history.db')
@@ -63,6 +64,7 @@ class Videos:
                                             'duration',
                                             'viewCount',
                                             'likeCount'
+                                            # 'thumbnails'
                                             ])
 
     def add(self, videos_data: pd.DataFrame):
@@ -76,13 +78,16 @@ class Channels:
     def __init__(self) -> None:
         self.channels = None
         self.columns = [
-              'channelId',
+              'id',
               'title',
               'publishedAt',
+              'country',
               'viewCount',
               'subscriberCount',
               'videoCount',
-              # 'banner'
+              'keywords',
+              # 'thumbnails',
+
               ]
 
     def add(self, channels_data: json):

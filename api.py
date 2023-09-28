@@ -10,7 +10,7 @@ youtube = build('youtube', 'v3', developerKey=API_KEY)
 def get_videos_info(video_ids) -> json:
     response = youtube.videos().list(part='snippet,contentDetails,statistics', id=','.join(video_ids)).execute()
     if response.get('items'):
-        formatted_json = response.get('items')
+        formatted_json = json.dumps(response.get('items'), indent=4)
         return formatted_json
     else:
         return []
@@ -26,7 +26,7 @@ def get_channels_info(channels_ids):
 
 
 def main():
-    pass
+    print(get_videos_info(['hC8CH0Z3L54']))
 
 
 if __name__ == '__main__':
