@@ -196,3 +196,7 @@ def show_biggest_value_videos(column_name: str, history: pd.DataFrame, videos: p
     merged = merged.sort_values(by=column_name, ascending=False).head(count)
     merged = merged.drop(columns=columns_to_drop)
     return merged
+
+# TODO: gridcallendar
+# TODO: radar
+# TODO: pie
