@@ -21,7 +21,7 @@ const Topbar = () => {
         {/* SEARCH BAR */}
         <Box 
             display="flex"
-            backgraundColor={colors.primary[400]}
+            backgroundColor={colors.primary[400]}
             borderRadius="3px"
             >
             <InputBase sx={{ ml: 2, flex: 1}} placeholder="Search" />
@@ -31,14 +31,13 @@ const Topbar = () => {
         </Box>
 
         {/* ICONS */}
-        <Box display={"flex"}>
+        <Box display="flex">
             <IconButton onClick={colorMode.toggleColorMode}>
                 { theme.palette.mode === 'dark' ? (
                     <DarkModeOutlinedIcon />
                 ) : (
                     <LightModeOutlinedIcon />
                 )}
-                <LightModeOutlinedIcon />
             </IconButton>
             <IconButton>
                 <SettingsOutlinedIcon />
@@ -48,6 +47,6 @@ const Topbar = () => {
             </IconButton>
         </Box>
     </Box>);
-}
+};
 
 export default Topbar;
