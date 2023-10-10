@@ -21,7 +21,7 @@ class Logic:
             json: {'total_watch_time': float = seconds}
         """
         data = {'total_watch_time': json.dumps(logic.calculate_total_watch_time(self.history.watch_history, self.history.videos.content))}
-        return json.dumps(data)
+        return data # json.dumps(data)
 
     def most_viewed_videos(self, count: int = 10, excluded_categories = []) -> json:
         """Function to handle most viewed videos query
@@ -32,8 +32,7 @@ class Logic:
                    'title': str
                    }
         """
-
-        return logic.show_most_viewed_videos(self.history.watch_history, self.history.videos.content, count=count, excluded_categories=excluded_categories).to_json(orient='records')
+        return logic.show_most_viewed_videos(self.history.watch_history, self.history.videos.content, count=count, excluded_categories=excluded_categories).to_dict(orient='records') # .to_json(orient='records')
 
     def most_viewed_channels(self) -> json:
         """Function to handle most viewed channels query
@@ -41,7 +40,7 @@ class Logic:
         Returns:
             json: {'channelId': int = count of viewes}
         """
-        return logic.show_most_viewed_channels(self.history.watch_history, self.history.videos.content).to_json(orient='records')
+        return logic.show_most_viewed_channels(self.history.watch_history, self.history.videos.content).to_dict(orient='records')
 
     def time_activity(self) -> json:
         """Function to hadnle time activity query:
@@ -49,7 +48,7 @@ class Logic:
         Returns:
             json: _description_
         """
-        return logic.time_activity_analysis(self.history.watch_history).to_json(orient='records')
+        return logic.time_activity_analysis(self.history.watch_history).to_dict(orient='records')
 
     def averagee_video_duration(self) -> json:
         """Function to handle average video duration query
@@ -58,7 +57,7 @@ class Logic:
             json: {'average_video_duration': float = seconds
         """
         data = {'average_video_duration': logic.average_video_duration(self.history.videos)}
-        return json.dumps(data)
+        return data
 
     def statistics_in_time(self) -> json:
         """Function to handle statistics in time query
@@ -70,7 +69,7 @@ class Logic:
                    'total_watch_time': float (in seconds)
                   }
         """
-        return logic.statistics_in_time(self.history.watch_history, self.history.videos.content).to_json(orient='records')
+        return logic.statistics_in_time(self.history.watch_history, self.history.videos.content).to_dict(orient='records')
 
     def most_liked_vidoes(self, count=10) -> json:
         """Fuction to handle videos with most likes count query
@@ -84,7 +83,7 @@ class Logic:
                    'like_count': float,
                    }
         """
-        return logic.show_biggest_value_videos('likeCount', self.history.watch_history, self.history.videos.content, count = count).to_json(orient='records')
+        return logic.show_biggest_value_videos('likeCount', self.history.watch_history, self.history.videos.content, count = count).to_dict(orient='records')
 
     def most_views_videos(self, count=10) -> json:
         """FUnction to handle videos with most view count query
@@ -98,7 +97,7 @@ class Logic:
                    'view_count': float,
                    }
         """
-        return logic.show_biggest_value_videos('viewCount', self.history.watch_history, self.history.videos.content, count).to_json(orient='records')
+        return logic.show_biggest_value_videos('viewCount', self.history.watch_history, self.history.videos.content, count).to_dict(orient='records')
 
 
 logic_ = Logic()

@@ -1,8 +1,9 @@
-import React, { useState } from "react";
-import { Menu, MenuItem, ProSidebar } from "react-pro-sidebar";
-import "react-pro-sidebar/dist/css/styles.css";
-import { Box, IconButton, Typography, useTheme } from '@mui/material';
+import React from "react";
+import { useState } from "react";
+import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
+import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
+import "react-pro-sidebar/dist/css/styles.css";
 import { tokens } from "../../theme";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined"; 
 import HelpOutlinedIcon from "@mui/icons-material/HelpOutlined"; 
@@ -19,17 +20,19 @@ const Item = ({title, to, icon, selected, setSelected}) => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode)
 
-    return (
-        <MenuItem 
-            active={selected === title}
-            style={{color: colors.grey[400]}}
-            onClick={ () => setSelected(title)}
-            icon = {icon}
-        >
-            <Typography>{title}</Typography>
-            <Link to={to}/>
-        </MenuItem>
-    );
+  return (
+    <MenuItem
+      active={selected === title}
+      style={{
+        color: colors.grey[100],
+      }}
+      onClick={() => setSelected(title)}
+      icon={icon}
+    >
+      <Typography>{title}</Typography>
+      <Link to={to} />
+    </MenuItem>
+  );
 };
 
 const Sidebar = () => {
@@ -116,7 +119,8 @@ const Sidebar = () => {
                     title="Dashboard"
                     to="/"
                     icon={<HomeOutlinedIcon />}
-                    selected={setSelected}
+                    selected={selected}
+                    setSelected={setSelected}
                 />
                 <Item 
                     title="Line Chart"
@@ -128,43 +132,49 @@ const Sidebar = () => {
                     title="Pie"
                     to="/pie"
                     icon={<PieChartOutlineOutlinedIcon />}
-                    selected={setSelected}
+                    selected={selected}
+                    setSelected={setSelected}
                 />
                 <Item 
                     title="Bar"
                     to="/bar"
                     icon={<BarChartOutlinedIcon />}
-                    selected={setSelected}
+                    selected={selected}
+                    setSelected={setSelected}
                 />
                 <Item 
                     title="Access"
                     to="/access"
                     icon={<AccessTimeOutlinedIcon />}
-                    selected={setSelected}
+                    selected={selected}
+                    setSelected={setSelected}
                 />
                 <Item 
                     title="Assessment"
                     to="/assessment"
                     icon={<AssessmentOutlinedIcon />}
-                    selected={setSelected}
+                    selected={selected}
+                    setSelected={setSelected}
                 />
                 <Item 
                     title="Calendar"
                     to="/calendar"
                     icon={<CalendarMonthOutlinedIcon />}
-                    selected={setSelected}
+                    selected={selected}
+                    setSelected={setSelected}
                 />
                 <Item 
                     title="Help"
                     to="/help"
                     icon={<HelpOutlinedIcon />}
-                    selected={setSelected}
+                    selected={selected}
+                    setSelected={setSelected}
                 />
             </Box>
             </Menu>
          </ProSidebar>
         </Box>
-    )
+    );
 }
 
 export default Sidebar;

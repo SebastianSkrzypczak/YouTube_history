@@ -3,6 +3,7 @@ from fastapi.responses import JSONResponse
 from starlette.templating import Jinja2Templates
 from pydantic import BaseModel
 from manager import logic_
+import json
 import logging
 
 app = FastAPI()
@@ -14,6 +15,7 @@ cache = {}
 
 @app.get('/default')
 async def read_all_default():
+    print(logic_.most_viewed_videos())
     content = {
                'total': logic_.total_watch_time(),
                'most_viewed_videos': logic_.most_viewed_videos(),
