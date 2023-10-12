@@ -10,7 +10,7 @@ const LineChart = ({isDashboard = false}) => {
     const colors = tokens(theme.palette.mode);
 
     return (
-        <ResponsiveLine
+        <ResponsiveLine 
         data={mockLineData}
         theme = {{
             axis:{
@@ -35,7 +35,7 @@ const LineChart = ({isDashboard = false}) => {
                 },
             }}}
         colors={isDashboard ? {datum: "color"} : {scheme: "nivo"}}
-        margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
+        margin={{ top: 80, right: 50, bottom: 40, left: 60 }}
         xScale={{ type: 'linear' }}
         yScale={{
             type: 'linear',
@@ -70,6 +70,7 @@ const LineChart = ({isDashboard = false}) => {
         pointBorderColor={{ from: 'serieColor' }}
         pointLabelYOffset={-12}
         useMesh={true}
+        isInteractive={isDashboard ? false : true}
     />
     );
 };

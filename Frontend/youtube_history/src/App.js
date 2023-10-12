@@ -22,7 +22,7 @@ function App() {
     <ThemeProvider theme = {theme}>
       <CssBaseline />
       <div className="app">
-      <Sidebar />
+      <Sidebar style={{ width: '250px'}}/>
         <main className='content'>
           <Topbar />
           <Routes>
@@ -35,7 +35,7 @@ function App() {
             <Route path="/pie" element={<Pie />} />
             <Route path="/calendar" element={<Calendar />} />
             <Route path="/faq" element={<FAQ />} />
-          */}
+          */} 
           </Routes> 
         </main>
       </div>

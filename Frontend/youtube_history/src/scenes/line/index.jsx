@@ -5,7 +5,7 @@ import React from "react";
 
 const Line = () => {
   return (
-    <Box m="20px" justifyItems='center' >
+    <Box display = 'flex' m="20px" justifyItems='center' alignItems='center' >
       <Header title="Line Chart" subtitle="Simple Line Chart" />
       <Box height="50vh" width="50vw">
         <LineChart />

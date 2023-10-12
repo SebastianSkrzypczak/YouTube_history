@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
 from starlette.templating import Jinja2Templates
 from pydantic import BaseModel
 from manager import logic_
@@ -17,21 +18,29 @@ cache = {}
 async def read_all_default():
     print(logic_.most_viewed_videos())
     content = {
-               'total': logic_.total_watch_time(),
-               'most_viewed_videos': logic_.most_viewed_videos(),
-               'most_viewed_channels': logic_.most_viewed_channels(),
-               'time_activity': logic_.time_activity(),
-               'average': logic_.averagee_video_duration(),
-               'statistics': logic_.statistics_in_time(),
-               'most_liked_vidoes': logic_.most_liked_vidoes(),
-               'most_views_videos': logic_.most_views_videos()
-               }
+        'total': logic_.total_watch_time(),
+        'most_viewed_videos': logic_.most_viewed_videos(),
+        'most_viewed_channels': logic_.most_viewed_channels(),
+        'time_activity': logic_.time_activity(),
+        'average': logic_.averagee_video_duration(),
+        'statistics': logic_.statistics_in_time(),
+        'most_liked_vidoes': logic_.most_liked_vidoes(),
+        'most_views_videos': logic_.most_views_videos()
+    }
 
     logger = logging.getLogger(__name__)
     logger.info(content)
     # TODO: logging
 
     return JSONResponse(content)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=['http://localhost:3000'],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 class MostViewedVideosData(BaseModel):
@@ -57,7 +66,8 @@ async def get_most_viewed_videos():
         categories = cache['most_viewed_videos']['categories']
     else:
         categories = []
-    content = {'most_viewed_videos': logic_.most_viewed_videos(count=count, excluded_categories=categories)}
+    content = {'most_viewed_videos': logic_.most_viewed_videos(
+        count=count, excluded_categories=categories)}
 
     return JSONResponse(content)
 
@@ -71,7 +81,7 @@ async def read_most_viewed_channels():
 
 @app.get('/time_activity')
 async def read_time_activity():
-    content = {'time_activity': logic_.time_activity(),}
+    content = {'time_activity': logic_.time_activity(), }
 
     return JSONResponse(content)
 
@@ -85,7 +95,7 @@ async def read_average():
 
 @app.get('/statistics')
 async def read_statistics():
-    content = {'statistics': logic_.statistics_in_time(),}
+    content = {'statistics': logic_.statistics_in_time(), }
 
     return JSONResponse(content)
 

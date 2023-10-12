@@ -16,9 +16,9 @@ const Topbar = () => {
     const colorMode = useContext(ColorModeContext);
 
     return (
-    <Box display = "flex" justifyContent="space-between" p={2}>
+    <Box display = "flex" justifyContent="flex-end" p={2}>
     
-        {/* SEARCH BAR */}
+        {/* SEARCH BAR
         <Box 
             display="flex"
             backgroundColor={colors.primary[400]}
@@ -28,7 +28,7 @@ const Topbar = () => {
             <IconButton type='button' sx={{p: 1}}>
                 <SearchIcon />
             </IconButton>
-        </Box>
+        </Box> */}
 
         {/* ICONS */}
         <Box display="flex">

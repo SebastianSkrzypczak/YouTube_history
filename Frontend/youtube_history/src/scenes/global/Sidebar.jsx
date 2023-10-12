@@ -44,6 +44,8 @@ const Sidebar = () => {
     return (
         <Box
             sx = {{
+                position: 'flex',
+                height: "100vh",
                 "& .pro-sidebar-inner": {
                     background: `${colors.primary[400]} !important`
                 },
@@ -126,7 +128,8 @@ const Sidebar = () => {
                     title="Line Chart"
                     to="/line"
                     icon={<StackedLineChartIcon />}
-                    selected={setSelected}
+                    selected={selected}
+                    setSelected={setSelected}
                 />
                 <Item 
                     title="Pie"
