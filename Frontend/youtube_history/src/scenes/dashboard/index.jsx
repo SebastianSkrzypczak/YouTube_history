@@ -47,6 +47,9 @@ const Dashboard = () => {
     }, []);
 
     return (
+
+        // DOWNLOAD BUTTON
+
         <Box m="20px">
             <Box display='flex' justifyContent='space-between' alignItems='center' marginBottom="20px" >
                 <Header title="DASHBOARD" subtitle="Welcome to your dashboard" />

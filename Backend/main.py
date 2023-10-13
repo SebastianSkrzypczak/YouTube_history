@@ -16,7 +16,6 @@ cache = {}
 
 @app.get('/default')
 async def read_all_default():
-    print(logic_.most_viewed_videos())
     content = {
         'total': logic_.total_watch_time(),
         'most_viewed_videos': logic_.most_viewed_videos(),
