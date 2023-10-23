@@ -34,3 +34,10 @@ body,
   background: #555;
 }
 
+.name-column--cell,
+.thumbnail-column--cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+

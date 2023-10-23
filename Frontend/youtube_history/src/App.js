@@ -7,7 +7,7 @@ import Sidebar from './scenes/global/Sidebar';
 import Dashboard from './scenes/dashboard/index';
 import Bar from "./scenes/bar";
 import Line from "./scenes/line";
-// import Videos from "./scenes/videos";
+import Videos from "./scenes/videos";
 // import Radar from "./scenes/radar";
 import Pie from "./scenes/pie";
 // import Calendar from "./scenes/calendar";
@@ -30,7 +30,8 @@ function App() {
             <Route path="/bar" element={<Bar />} />
             <Route path="/pie" element={<Pie />} />
             <Route path='/line' element={<Line />} />
-            {/* <Route path="/videos" element={<Videos />} />
+            <Route path="/videos" element={<Videos />} />
+            {/* 
             <Route path="/radar" element={<Radar />} />
             <Route path="/pie" element={<Pie />} />
             <Route path="/calendar" element={<Calendar />} />

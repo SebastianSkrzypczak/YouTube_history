@@ -1,6 +1,7 @@
 import data
 import logic
 import json
+from icecream import ic
 
 
 class Logic:
@@ -20,10 +21,11 @@ class Logic:
         Returns:
             json: {'total_watch_time': float = seconds}
         """
-        data = {'total_watch_time': json.dumps(logic.calculate_total_watch_time(self.history.watch_history, self.history.videos.content))}
-        return data # json.dumps(data)
+        data = {'total_watch_time': json.dumps(logic.calculate_total_watch_time(
+            self.history.watch_history, self.history.videos.content))}
+        return data  # json.dumps(data)
 
-    def most_viewed_videos(self, count: int = 10, excluded_categories = []) -> json:
+    def most_viewed_videos(self, count: int = 10, excluded_categories=[]) -> json:
         """Function to handle most viewed videos query
 
         Returns:
@@ -32,7 +34,7 @@ class Logic:
                    'title': str
                    }
         """
-        return logic.show_most_viewed_videos(self.history.watch_history, self.history.videos.content, count=count, excluded_categories=excluded_categories).to_dict(orient='records') # .to_json(orient='records')
+        return logic.show_most_viewed_videos(self.history.watch_history, self.content, count=count, excluded_categories=excluded_categories).to_dict(orient='records')  # .to_json(orient='records')
 
     def most_viewed_channels(self) -> json:
         """Function to handle most viewed channels query
@@ -40,6 +42,7 @@ class Logic:
         Returns:
             json: {'channelId': int = count of viewes}
         """
+        ic(self.content.columns)
         return logic.show_most_viewed_channels(self.history.watch_history, self.history.videos.content).to_dict(orient='records')
 
     def time_activity(self) -> json:
@@ -56,7 +59,8 @@ class Logic:
         Returns:
             json: {'average_video_duration': float = seconds
         """
-        data = {'average_video_duration': logic.average_video_duration(self.history.videos)}
+        data = {'average_video_duration': logic.average_video_duration(
+            self.history.videos)}
         return data
 
     def statistics_in_time(self) -> json:
@@ -83,7 +87,7 @@ class Logic:
                    'like_count': float,
                    }
         """
-        return logic.show_biggest_value_videos('likeCount', self.history.watch_history, self.history.videos.content, count = count).to_dict(orient='records')
+        return logic.show_biggest_value_videos('likeCount', self.history.watch_history, self.history.videos.content, count=count).to_dict(orient='records')
 
     def most_views_videos(self, count=10) -> json:
         """FUnction to handle videos with most view count query
