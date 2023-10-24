@@ -47,7 +47,12 @@ class MostViewedVideosData(BaseModel):
     categories: list[int]
 
 
-@app.post('/most_viewed_videos')
+@app.get('/total')
+async def post_total_watch_time():
+    return JSONResponse(logic_.total_watch_time())
+
+
+@app.get('/most_viewed_videos')
 async def post_most_viewed_videos(data: MostViewedVideosData):
 
     cache['most_viewed_videos'] = {'count': data.count,

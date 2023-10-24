@@ -81,8 +81,15 @@ const Sidebar = () => {
                         alignItems='center'
                         ml = '15px'
                         >
-                            <Typography variant="h3" color={colors.grey[100]}>
-                                YouTubeHistory
+                            <img 
+                            alt = 'profile-user'
+                            width='50px'
+                            height='50px'
+                            src='https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/YouTube_social_white_squircle_%282017%29.svg/450px-YouTube_social_white_squircle_%282017%29.svg.png?20220808215450'
+                            style={{borderRadius: '50%'}}
+                            />
+                            <Typography variant="h1" color={colors.grey[100]} margin={2}>
+                                STATS
                             </Typography>
                             <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
                                 <MenuOutlinedIcon />
@@ -92,7 +99,7 @@ const Sidebar = () => {
                 </MenuItem>
 
                 {/* USER */}
-                {!isCollapsed && (
+                {/* {!isCollapsed && (
                     <Box mb="25px">
                         <Box display='flex' justifyContent='center' alignItems='center'>
                             <img 
@@ -113,7 +120,7 @@ const Sidebar = () => {
                             </Typography>
                         </Box>
                     </Box>
-                )}
+                )} */}
 
             {/* MENU ITEMS */}
             <Box paddingLeft={isCollapsed ? undefined: "10%"}>

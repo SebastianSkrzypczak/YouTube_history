@@ -40,8 +40,6 @@ const Dashboard = () => {
                 setAverage(averageValue);
                 const videosCountValue = Math.floor(parseFloat(data['total']['total_watch_time']) / data['average']['average_video_duration'])
                 setVideosCount(videosCountValue)
-                console.log(videosCountValue)
-
             })
             .catch(error => console.error('Error:', error));
     }, []);

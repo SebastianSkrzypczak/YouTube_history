@@ -7,23 +7,23 @@ const StatBox = ( {title, subtitle, value, icon} ) => {
     const colors = tokens(theme.palette.mode);
 
     return (
-        <Box width='100%' m = '0 30 px'>
+        <Box width='100%' m = '10px 10px'>
             <Box display='flex' justifyContent='space-evenly' flexDirection='column' alignItems='center'>
                 <Box alignContent='center'>
                     {icon}
                 </Box>
                 <Box>
-                    <Typography variant="h4" fontWeight='bold' sx = {{ color: colors.grey[100]}}>
+                    <Typography variant="h6" sx = {{ color: colors.primary[100]}}>
                         {title}
                     </Typography>
                 </Box>
                 <Box display='flex' justifyContent='space-between' >
-                    <Typography variant="h5" fontWeight='italic' sx = {{ color: colors.greenAccent[600]}}>
+                    <Typography variant="h6" fontWeight='italic' sx = {{ color: colors.primary[200]}}>
                         {value}
                     </Typography>
                 </Box>
                 <Box display='flex' justifyContent='space-between' >
-                    <Typography variant="h5" sx = {{ color: colors.greenAccent[100]}}>
+                    <Typography variant="h5" sx = {{ color: colors.grey[400]}}>
                         {subtitle}
                     </Typography>
                 </Box>
