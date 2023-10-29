@@ -65,7 +65,7 @@ const Topbar = ({isCollapsed}) => {
         }} 
         flexDirection='row'
         justifyContent='space-between'>
-        <Box display = "flex" justifyContent="flex-start" p={2}>
+        <Box display = "flex" justifyContent='flex-start' p={2}>
         {/* { COUNT  */}
             <Box 
             display="flex"
@@ -73,9 +73,10 @@ const Topbar = ({isCollapsed}) => {
             borderRadius="10px"
             justifyContent='left'
             marginRight={2}
+            width= '22vw'
             >
                 <StatBox
-                    title = 'Number of videos You watched!'
+                    title = 'Number of watched videos!'
                     value={Math.floor(total/average)}
                 />
             </Box>
@@ -87,9 +88,10 @@ const Topbar = ({isCollapsed}) => {
             borderRadius="10px"
             justifyContent='left'
             marginRight={2}
+            width= '20vw'
             >
                 <StatBox
-                    title = 'Total time spend on watching videos!'
+                    title = 'Total time spend on watching!'
                     value={secondsToDhms(parseFloat(total))}
                 />
             </Box>
@@ -101,9 +103,10 @@ const Topbar = ({isCollapsed}) => {
             borderRadius="10px"
             justifyContent='left'
             marginRight={2}
+            width= '15vw'
             >
                 <StatBox
-                    title = 'Duration of an average vidoe You watched!'
+                    title = 'Duration of an average vidoe!'
                     value={secondsToDhms(parseFloat(average))}
                 />
             </Box>

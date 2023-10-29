@@ -46,24 +46,6 @@ const Dashboard = () => {
 
     return (
         <Box m="20px">
-            {/* <Box display='flex' justifyContent='space-between' alignItems='center' marginBottom="20px" >
-                <Header title="DASHBOARD" subtitle="Welcome to your dashboard" />
-                <Button
-                    sx = {{ 
-                        backgroundColor: colors.blueAccent[700],
-                        color: colors.grey[100],
-                        fontSize: "14px",
-                        fontWeight: "bold",
-                        padding: "10px 20px",
-                        marginBottom: "20px"
-                        }}
-                >
-                <DownloadSharpIcon sx={{mr: "10px"}} />
-                    Download Raport
-                </Button>
-            </Box> */}
-
-            {/* GRID  */}
             <Box
                 display="grid"
                 gridTemplateColumns="repeat(12, 1fr)"

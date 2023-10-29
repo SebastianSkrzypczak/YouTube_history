@@ -1,4 +1,4 @@
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, Typography, useTheme,Grid, Card, CardMedia, CardContent } from "@mui/material";
 import React from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
@@ -12,55 +12,35 @@ const Videos = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode)
 
-    const columns = [
-        {
-            field: 'thumbnail',
-            headerName: 'THUMBNAIL',
-            renderCell: (params) => (
-                <div style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
-                <img 
-                    src ={params.value}
-                    alt={'Thumbnail ${params.row.id}'}
-                    // style={{ width: '200px', height: '200px'}}
-                />
-                </div>
-            ),
-            cellClassName: "thumbnail-column--cell",
-            flex: 1,
-            headerAlign: "center",
-            align: 'center'
-        },
-        {
-            field: 'count',
-            headerName: 'COUNT',
-            type: 'number',
-            headerAlign: "center",
-            align: 'center'
-        },
-        {
-            field: 'title',
-            headerName: 'TITLE',
-            flex: 1,
-            cellClassName: "name-column--cell",
-            headerAlign: "center",
-            align: 'center'
-        },
-    ];
-
-    const getRowHeight = () => 100; // Ustaw wysokość wiersza na 200px (dla przykładu)
-
     return (
-        <Box>
-            <Header title='Videos' subtitle='vidoes' />
-            <Box style={{heigh: 500, width: '100%'}}>
-                <DataGrid
-                    rows = {mockVideosData}
-                    columns ={columns}
-                    autoHeight
-                    getRowHeight={getRowHeight}
-                />
+            <Box sx={{
+                padding: '20px',
+            }}>
+                <Grid container spacing={2}>
+                {mockVideosData.map((video) => (
+                    <Grid item key={video.id} xs={12} sm={6} md={4} lg={3} >
+                    <Card style={{borderRadius: '25px'}}>
+                        <CardMedia
+                        component="img"
+                        alt={video.title}
+                        height="140"
+                        image={video.thumbnail}
+                        style={{
+                            borderRadius: '25px',
+                            padding: '10px'
+                        }}
+                        />
+                        <CardContent>
+                            <Typography variant="subtitle1">{video.title}</Typography>
+                            <Typography variant='h6' color="text.secondary" align='right'>
+                            Views: {video.count}
+                            </Typography>
+                        </CardContent>
+                    </Card>
+                    </Grid>
+                ))}
+                </Grid>
             </Box>
-        </Box>
     )
 }
 

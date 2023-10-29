@@ -14,6 +14,8 @@ import StackedLineChartIcon from '@mui/icons-material/StackedLineChart';
 import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
 import AssessmentOutlinedIcon from '@mui/icons-material/AssessmentOutlined';
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
+import SmartDisplayOutlinedIcon from '@mui/icons-material/SmartDisplayOutlined';
+
 
 
 const Item = ({title, to, icon, selected, setSelected}) => {
@@ -113,6 +115,13 @@ const Sidebar = ({isCollapsed, setIsCollapsed}) => {
                     title="Dashboard"
                     to="/"
                     icon={<HomeOutlinedIcon style={{fontSize: '30', marginRight: '10px'}}/>}
+                    selected={selected}
+                    setSelected={setSelected}
+                />
+                <Item
+                    title='TOP VIDEOS'
+                    to='/videos'
+                    icon={<SmartDisplayOutlinedIcon style = {{fontSize: '30', marginRight: '10px'}} />}
                     selected={selected}
                     setSelected={setSelected}
                 />
