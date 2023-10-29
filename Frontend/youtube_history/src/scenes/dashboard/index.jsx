@@ -45,11 +45,8 @@ const Dashboard = () => {
     }, []);
 
     return (
-
-        // DOWNLOAD BUTTON
-
         <Box m="20px">
-            <Box display='flex' justifyContent='space-between' alignItems='center' marginBottom="20px" >
+            {/* <Box display='flex' justifyContent='space-between' alignItems='center' marginBottom="20px" >
                 <Header title="DASHBOARD" subtitle="Welcome to your dashboard" />
                 <Button
                     sx = {{ 
@@ -64,23 +61,23 @@ const Dashboard = () => {
                 <DownloadSharpIcon sx={{mr: "10px"}} />
                     Download Raport
                 </Button>
-            </Box>
+            </Box> */}
 
             {/* GRID  */}
             <Box
                 display="grid"
-                
                 gridTemplateColumns="repeat(12, 1fr)"
                 gridAutoRows="140px"
-                gap="10px"
+                gap="15px"
             >
 
-            {/* ROW 1 */}
+                {/* ROW 1 */}
                 <Box gridColumn="span 4"
                 backgroundColor={colors.primary[400]}
                 display="flex"
                 alignItems="center"
                 justifyContent="center"
+                borderRadius='20px'
                 >
                     <StatBox
                         title = "Total watch time"
@@ -96,6 +93,7 @@ const Dashboard = () => {
                 display="flex"
                 alignItems="center"
                 justifyContent="center"
+                borderRadius='20px'
                 >
                     <StatBox
                         title = "Average watch time"
@@ -111,6 +109,7 @@ const Dashboard = () => {
                 display="flex"
                 alignItems="center"
                 justifyContent="center"
+                borderRadius='20px'
                 >
                     <StatBox
                         title = "Watched Videos"
@@ -122,7 +121,7 @@ const Dashboard = () => {
                     />
                 </Box>
 
-            {/* ROW 2 */}
+                {/* ROW 2 */}
                 <Box 
                     gridColumn='span 6'
                     gridRow='span 2'
@@ -132,6 +131,7 @@ const Dashboard = () => {
                     alignContent='center'
                     alignItems='center'
                     justifyContent='center'
+                    borderRadius='20px'
                 >
                     <LineChart isDashboard={true}/>
                     <Button variant="outlined" startIcon={<InfoOutlinedIcon />}
@@ -152,6 +152,7 @@ const Dashboard = () => {
                     alignContent='center'
                     alignItems='center'
                     justifyContent='center'
+                    borderRadius='20px'
                 >
                     <BarChart isDashboard = {true}/>
                     <Button variant="outlined" startIcon={<InfoOutlinedIcon />}

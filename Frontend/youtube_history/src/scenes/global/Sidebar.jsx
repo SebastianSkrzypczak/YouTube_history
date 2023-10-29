@@ -19,13 +19,18 @@ import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined
 const Item = ({title, to, icon, selected, setSelected}) => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode)
+    const [isHovered, setIsHovered] = useState(false)
 
   return (
     <MenuItem
       active={selected === title}
       style={{
         color: colors.grey[100],
+        backgroundColor: isHovered ? colors.grey[800] : 'transparent',
+        borderRadius: '10px',
       }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
       onClick={() => setSelected(title)}
       icon={icon}
     >
@@ -35,40 +40,41 @@ const Item = ({title, to, icon, selected, setSelected}) => {
   );
 };
 
-const Sidebar = () => {
+const Sidebar = ({isCollapsed, setIsCollapsed}) => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
-    const [isCollapsed, setIsCollapsed] = useState(false);
+    //const [isCollapsed, setIsCollapsed] = useState(false);
     const [selected, setSelected] = useState('Dashboard');
     
     return (
         <Box
             sx = {{
-                position: 'flex',
-                height: "100vh",
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                bottom: 0,
+                zIndex: 1000,
                 "& .pro-sidebar-inner": {
-                    background: `${colors.primary[400]} !important`
+                    background: `${colors.primary[500]} !important`,
                 },
                 "& .pro-icon-wrapper": {
                     backgroundColor: 'transparent !important' 
                 },
-                "& .pro-inner-item": {
-                    padding: "5px 35px 5px 20px !important"
-                },
-                "& .pro-inner-item:hover": {
-                    color: "#868dfb !important"
-                },
+                
                 "& .pro-menu-item.active": {
-                    color: "#6870fa !important"
+                    backgroundColor: `${colors.grey[800]} !important`
                 }
             }}
         >
-         <ProSidebar collapsed = {isCollapsed}>
-            <Menu iconShape="sqaure">
+         <ProSidebar 
+            collapsed = {isCollapsed}
+            style = {{height: "100vh"}}
+            >
+            <Menu iconShape='square'>
                 {/* LOGO AND MENU ICON */}
                 <MenuItem
                     onClick={() => setIsCollapsed(!isCollapsed)}
-                    icon={isCollapsed ? <MenuOutlinedIcon /> : undefined}    
+                    icon={isCollapsed ? <MenuOutlinedIcon style = {{fontSize: '30'}}/> : undefined}    
                     style={{
                         margin: "10px 0 20px 0",
                         color: colors.grey[100]
@@ -77,106 +83,85 @@ const Sidebar = () => {
                     {!isCollapsed && (
                         <Box 
                         display='flex'
-                        justifyContent='space-between'
+                        justifyContent='space-evenly'
                         alignItems='center'
                         ml = '15px'
                         >
+                            <IconButton onClick={() => setIsCollapsed(!isCollapsed) }>
+                                <MenuOutlinedIcon style={{fontSize: '30'}}/>
+                            </IconButton>
                             <img 
                             alt = 'profile-user'
                             width='50px'
                             height='50px'
                             src='https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/YouTube_social_white_squircle_%282017%29.svg/450px-YouTube_social_white_squircle_%282017%29.svg.png?20220808215450'
-                            style={{borderRadius: '50%'}}
+                            style={{borderRadius: '25'}}
                             />
-                            <Typography variant="h1" color={colors.grey[100]} margin={2}>
+                            <Typography variant="h3" fontStyle='italic' color={colors.grey[100]} >
                                 STATS
                             </Typography>
-                            <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
-                                <MenuOutlinedIcon />
-                            </IconButton>
                         </Box>
                     )}
                 </MenuItem>
 
-                {/* USER */}
-                {/* {!isCollapsed && (
-                    <Box mb="25px">
-                        <Box display='flex' justifyContent='center' alignItems='center'>
-                            <img 
-                            alt = 'profile-user'
-                            width='100px'
-                            height='100px'
-                            src='https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/YouTube_social_white_squircle_%282017%29.svg/450px-YouTube_social_white_squircle_%282017%29.svg.png?20220808215450'
-                            style={{cursor: 'pointer', borderRadius: '50%'}}
-                            />
-                        </Box>
-
-                        <Box textAlign='center'>
-                            <Typography variant="h2" color={colors.grey[100]} fontWeight='bold' sx={{m: "10px 0 0 0"}}>
-                                USER
-                            </Typography>
-                            <Typography variant="h5" color={colors.greenAccent[500]}>
-                                Admin
-                            </Typography>
-                        </Box>
-                    </Box>
-                )} */}
-
             {/* MENU ITEMS */}
-            <Box paddingLeft={isCollapsed ? undefined: "10%"}>
+            <Box 
+                paddingLeft={"5%"}
+                paddingRight={"5%"}
+            >
                 <Item 
                     title="Dashboard"
                     to="/"
-                    icon={<HomeOutlinedIcon />}
+                    icon={<HomeOutlinedIcon style={{fontSize: '30', marginRight: '10px'}}/>}
                     selected={selected}
                     setSelected={setSelected}
                 />
                 <Item 
                     title="Line Chart"
                     to="/line"
-                    icon={<StackedLineChartIcon />}
+                    icon={<StackedLineChartIcon style={{fontSize: '30', marginRight: '10px'}} />}
                     selected={selected}
                     setSelected={setSelected}
                 />
                 <Item 
                     title="Pie"
                     to="/pie"
-                    icon={<PieChartOutlineOutlinedIcon />}
+                    icon={<PieChartOutlineOutlinedIcon style={{fontSize: '30', marginRight: '10px'}} />}
                     selected={selected}
                     setSelected={setSelected}
                 />
                 <Item 
                     title="Bar"
                     to="/bar"
-                    icon={<BarChartOutlinedIcon />}
+                    icon={<BarChartOutlinedIcon style={{fontSize: '30', marginRight: '10px'}} />}
                     selected={selected}
                     setSelected={setSelected}
                 />
                 <Item 
                     title="Access"
                     to="/access"
-                    icon={<AccessTimeOutlinedIcon />}
+                    icon={<AccessTimeOutlinedIcon style={{fontSize: '30', marginRight: '10px'}}/>}
                     selected={selected}
                     setSelected={setSelected}
                 />
                 <Item 
                     title="Assessment"
                     to="/assessment"
-                    icon={<AssessmentOutlinedIcon />}
+                    icon={<AssessmentOutlinedIcon style={{fontSize: '30', marginRight: '10px'}}/>}
                     selected={selected}
                     setSelected={setSelected}
                 />
                 <Item 
                     title="Calendar"
                     to="/calendar"
-                    icon={<CalendarMonthOutlinedIcon />}
+                    icon={<CalendarMonthOutlinedIcon style={{fontSize: '30', marginRight: '10px'}}/>}
                     selected={selected}
                     setSelected={setSelected}
                 />
                 <Item 
                     title="Help"
                     to="/help"
-                    icon={<HelpOutlinedIcon />}
+                    icon={<HelpOutlinedIcon style={{fontSize: '30', marginRight: '10px'}}/>}
                     selected={selected}
                     setSelected={setSelected}
                 />

@@ -13,7 +13,7 @@ import StatBox from "../../components/StatBox";
 import AccessTimeOutlined from "@mui/icons-material/AccessTimeOutlined";
 
 
-const Topbar = () => {
+const Topbar = ({isCollapsed}) => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
     const colorMode = useContext(ColorModeContext);
@@ -51,18 +51,31 @@ const Topbar = () => {
     }, []);
 
     return (
-    <Box display='flex' flexDirection='row' justifyContent='space-between'>
+    <Box
+        sx={{
+        //width: isCollapsed ? '100%' : 'calc(100% - 250px)',
+        width: '100%',
+        display: 'flex',
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        zIndex: 999, 
+        paddingLeft: isCollapsed ? '100px' : '300px',
+        transition: 'padding-left 0.3s ease',
+        }} 
+        flexDirection='row'
+        justifyContent='space-between'>
         <Box display = "flex" justifyContent="flex-start" p={2}>
         {/* { COUNT  */}
             <Box 
             display="flex"
-            backgroundColor={colors.primary[400]}
+            backgroundColor={colors.grey[800]}
             borderRadius="10px"
             justifyContent='left'
             marginRight={2}
             >
                 <StatBox
-                    title = 'This numer of videos You watched!'
+                    title = 'Number of videos You watched!'
                     value={Math.floor(total/average)}
                 />
             </Box>
@@ -70,13 +83,13 @@ const Topbar = () => {
         {/* { TOTAL WATCH  */}
             <Box 
             display="flex"
-            backgroundColor={colors.primary[400]}
+            backgroundColor={colors.grey[800]}
             borderRadius="10px"
             justifyContent='left'
             marginRight={2}
             >
                 <StatBox
-                    title = 'This is total time spend on watching videos!'
+                    title = 'Total time spend on watching videos!'
                     value={secondsToDhms(parseFloat(total))}
                 />
             </Box>
@@ -84,13 +97,13 @@ const Topbar = () => {
         {/* { AVERAGE  */}
             <Box 
             display="flex"
-            backgroundColor={colors.primary[400]}
+            backgroundColor={colors.grey[800]}
             borderRadius="10px"
             justifyContent='left'
             marginRight={2}
             >
                 <StatBox
-                    title = 'This is duration of a average vidoe You watched!'
+                    title = 'Duration of an average vidoe You watched!'
                     value={secondsToDhms(parseFloat(average))}
                 />
             </Box>
