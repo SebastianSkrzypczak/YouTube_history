@@ -6,8 +6,6 @@ import json
 import logging
 import api
 import pandas as pd
-from icecream import ic
-
 
 engine = create_engine('sqlite:///history.db')
 inspector = inspect(engine)
@@ -340,7 +338,6 @@ if __name__ == "__main__":
     main()
 
 # TODO: write down all desired features
-# TODO: DOCSTRINGS
 # TODO: Exceptions and ErrorsHandlig
 # TODO: MAX 50 urls
 # TODO: channels

@@ -4,8 +4,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from starlette.templating import Jinja2Templates
 from pydantic import BaseModel
 from manager import logic_
-import json
-import logging
 
 app = FastAPI()
 
@@ -26,10 +24,6 @@ async def read_all_default():
         'most_liked_vidoes': logic_.most_liked_vidoes(),
         'most_views_videos': logic_.most_views_videos()
     }
-
-    logger = logging.getLogger(__name__)
-    logger.info(content)
-    # TODO: logging
 
     return JSONResponse(content)
 

@@ -1,14 +1,15 @@
 from googleapiclient.discovery import build
 import json
 
-API_file = open('API.txt', 'r')
-API_KEY = API_file.readline()
+api_file = open('API.txt', 'r')
+API_KEY = api_file.readline()
 
 youtube = build('youtube', 'v3', developerKey=API_KEY)
 
 
 def get_videos_info(video_ids) -> json:
-    response = youtube.videos().list(part='snippet,contentDetails,statistics', id=','.join(video_ids)).execute()
+    response = youtube.videos().list(part='snippet,contentDetails,statistics',
+                                     id=','.join(video_ids)).execute()
     if response.get('items'):
         formatted_json = response.get('items')
         return formatted_json
@@ -17,7 +18,8 @@ def get_videos_info(video_ids) -> json:
 
 
 def get_channels_info(channels_ids):
-    response = youtube.channels().list(part='snippet,statistics,brandingSettings,contentDetails', id=','.join(channels_ids)).execute()
+    response = youtube.channels().list(part='snippet,statistics,brandingSettings,contentDetails',
+                                       id=','.join(channels_ids)).execute()
     if response.get('items'):
         formatted_json = response.get('items')
         return formatted_json

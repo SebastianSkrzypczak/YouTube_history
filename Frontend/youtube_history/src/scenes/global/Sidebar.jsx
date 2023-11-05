@@ -27,8 +27,7 @@ const Item = ({title, to, icon, selected, setSelected}) => {
     <MenuItem
       active={selected === title}
       style={{
-        color: colors.grey[100],
-        backgroundColor: isHovered ? colors.grey[800] : 'transparent',
+        backgroundColor: isHovered ? colors.grey[700] : 'transparent',
         borderRadius: '10px',
       }}
       onMouseEnter={() => setIsHovered(true)}
@@ -57,7 +56,7 @@ const Sidebar = ({isCollapsed, setIsCollapsed}) => {
                 bottom: 0,
                 zIndex: 1000,
                 "& .pro-sidebar-inner": {
-                    background: `${colors.primary[500]} !important`,
+                    background: `${colors.grey[900]} !important`,
                 },
                 "& .pro-icon-wrapper": {
                     backgroundColor: 'transparent !important' 
@@ -99,7 +98,7 @@ const Sidebar = ({isCollapsed, setIsCollapsed}) => {
                             src='https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/YouTube_social_white_squircle_%282017%29.svg/450px-YouTube_social_white_squircle_%282017%29.svg.png?20220808215450'
                             style={{borderRadius: '25'}}
                             />
-                            <Typography variant="h3" fontStyle='italic' color={colors.grey[100]} >
+                            <Typography variant="h3" fontStyle='italic' >
                                 STATS
                             </Typography>
                         </Box>
@@ -143,27 +142,6 @@ const Sidebar = ({isCollapsed, setIsCollapsed}) => {
                     title="Bar"
                     to="/bar"
                     icon={<BarChartOutlinedIcon style={{fontSize: '30', marginRight: '10px'}} />}
-                    selected={selected}
-                    setSelected={setSelected}
-                />
-                <Item 
-                    title="Access"
-                    to="/access"
-                    icon={<AccessTimeOutlinedIcon style={{fontSize: '30', marginRight: '10px'}}/>}
-                    selected={selected}
-                    setSelected={setSelected}
-                />
-                <Item 
-                    title="Assessment"
-                    to="/assessment"
-                    icon={<AssessmentOutlinedIcon style={{fontSize: '30', marginRight: '10px'}}/>}
-                    selected={selected}
-                    setSelected={setSelected}
-                />
-                <Item 
-                    title="Calendar"
-                    to="/calendar"
-                    icon={<CalendarMonthOutlinedIcon style={{fontSize: '30', marginRight: '10px'}}/>}
                     selected={selected}
                     setSelected={setSelected}
                 />

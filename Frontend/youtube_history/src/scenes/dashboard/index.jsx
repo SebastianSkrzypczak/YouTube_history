@@ -1,19 +1,13 @@
 import { Box, Button, IconButton, Typography, useTheme } from "@mui/material";
 import { tokens } from "../../theme";
 import { useNavigate } from "react-router-dom";
-import Header from '../../components/Header';
 import React, { useEffect } from "react";
 import LineChart from "../../components/LineChart";
-import PieChart from "../../components/PieChart";
-import StatBox from "../../components/StatBox";
-import DownloadSharpIcon from '@mui/icons-material/DownloadSharp';
-import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
-import TimerOutlinedIcon from '@mui/icons-material/TimerOutlined';
-import OndemandVideoOutlinedIcon from '@mui/icons-material/OndemandVideoOutlined';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import BarChart from "../../components/BarChart";
 import secondsToDhms from "../../data/conversions"
 import { useState } from "react";
+import VideosComp from "../../components/Videos";
 
 
 const Dashboard = () => {
@@ -49,65 +43,39 @@ const Dashboard = () => {
             <Box
                 display="grid"
                 gridTemplateColumns="repeat(12, 1fr)"
-                gridAutoRows="140px"
-                gap="15px"
+                gridAutoRows="150px"
+                gap="25px"
             >
-
-                {/* ROW 1 */}
-                <Box gridColumn="span 4"
-                backgroundColor={colors.primary[400]}
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-                borderRadius='20px'
-                >
-                    <StatBox
-                        title = "Total watch time"
-                        subtitle = "total time spent watching"
-                        value = {total}
-                        icon = {
-                            <AccessTimeOutlinedIcon/>
-                        }
-                    />
-                </Box>
-                <Box gridColumn="span 4"
-                backgroundColor={colors.primary[400]}
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-                borderRadius='20px'
-                >
-                    <StatBox
-                        title = "Average watch time"
-                        subtitle = "average video duration"
-                        value = {average}
-                        icon = {
-                            <TimerOutlinedIcon/>
-                        }
-                    />
-                </Box>
-                <Box gridColumn="span 4"
-                backgroundColor={colors.primary[400]}
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-                borderRadius='20px'
-                >
-                    <StatBox
-                        title = "Watched Videos"
-                        subtitle = "total count of vidoes"
-                        value = {videosCount}
-                        icon = {
-                            <OndemandVideoOutlinedIcon/>
-                        }
-                    />
-                </Box>
 
                 {/* ROW 2 */}
                 <Box 
+                    gridColumn='span 12'
+                    gridRow='span 2'
+                    //backgroundColor={colors.primary[400]}
+                    display='block'
+                    //flexDirection='column'
+                    justifyContent='center'
+                    alignContent='center'
+                    alignItems='center'
+                    borderRadius='20px'
+                >
+                    <VideosComp isDashboard={true}/>
+                    {/* <Button variant="outlined" startIcon={<InfoOutlinedIcon />}
+                        sx= {{
+                        marginBottom: "50px",
+                        backgroundColor: colors.grey[700],
+                        color: colors.grey[100],
+                        padding: '10px'}}
+                        onClick={() => handleButtonClick('/videos')}>
+                        More details
+                    </Button> */}
+                </Box>
+                
+                {/* ROW 3 */}
+                <Box 
                     gridColumn='span 6'
                     gridRow='span 2'
-                    backgroundColor={colors.primary[400]}
+                    backgroundColor={colors.grey[800]}
                     display='flex'
                     flexDirection='column'
                     alignContent='center'
@@ -119,7 +87,7 @@ const Dashboard = () => {
                     <Button variant="outlined" startIcon={<InfoOutlinedIcon />}
                         sx= {{
                         marginBottom: "50px",
-                        backgroundColor: colors.blueAccent[700],
+                        backgroundColor: colors.grey[700],
                         color: colors.grey[100]}}
                         onClick={() => handleButtonClick('/line')}>
                         More details
@@ -128,7 +96,7 @@ const Dashboard = () => {
                 <Box 
                     gridColumn='span 6'
                     gridRow='span 2'
-                    backgroundColor={colors.primary[400]}
+                    backgroundColor={colors.grey[800]}
                     display='flex'
                     flexDirection='column'
                     alignContent='center'
@@ -140,7 +108,7 @@ const Dashboard = () => {
                     <Button variant="outlined" startIcon={<InfoOutlinedIcon />}
                         sx= {{
                         marginBottom: "50px",
-                        backgroundColor: colors.blueAccent[700],
+                        backgroundColor: colors.grey[700],
                         color: colors.grey[100]}}
                         onClick={() => handleButtonClick('/bar')}>
                         More details
