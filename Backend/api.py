@@ -1,13 +1,20 @@
 from googleapiclient.discovery import build
 import json
 
-api_file = open('API.txt', 'r')
-API_KEY = api_file.readline()
 
-youtube = build('youtube', 'v3', developerKey=API_KEY)
+def set_up():
+    try:
+        api_file = open('API.txt', 'r')
+    except FileNotFoundError as e:
+        raise e
+    API_KEY = api_file.readline()
+    try:
+        return build('youtube', 'v3', developerKey=API_KEY)
+    except Exception as e:
+        raise e
 
 
-def get_videos_info(video_ids) -> json:
+def get_videos_info(video_ids, youtube) -> json:
     response = youtube.videos().list(part='snippet,contentDetails,statistics',
                                      id=','.join(video_ids)).execute()
     if response.get('items'):
@@ -17,7 +24,8 @@ def get_videos_info(video_ids) -> json:
         return []
 
 
-def get_channels_info(channels_ids):
+def get_channels_info(channels_ids, youtube):
+
     response = youtube.channels().list(part='snippet,statistics,brandingSettings,contentDetails',
                                        id=','.join(channels_ids)).execute()
     if response.get('items'):
@@ -28,10 +36,8 @@ def get_channels_info(channels_ids):
 
 
 def main():
-    print(get_videos_info(['hC8CH0Z3L54']))
+    pass
 
 
 if __name__ == '__main__':
     main()
-
-# TODO: Exceptions and ErrorsHandlig

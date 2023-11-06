@@ -183,6 +183,7 @@ class WatchHistory(Repository):
         ]
         self.videos = None
         self.sql = SQLFile()
+        self.youtube = api.set_up()
         if inspector.has_table('damaged_urls'):
             self.damaged_urls = self.sql.read('damaged_urls')
         else:
@@ -298,7 +299,7 @@ class WatchHistory(Repository):
         for i in range(batch_size, len(video_urls), batch_size):
             urls_list = list(
                 set(video_urls[i-batch_size:i])-set([x[0] for x in self.damaged_urls.values]))
-            videos_data = api.get_videos_info(urls_list)
+            videos_data = api.get_videos_info(urls_list, self.youtube)
             if videos_data == []:
                 self.damaged_urls = pd.concat([self.damaged_urls, pd.DataFrame(
                     urls_list, columns=['id'])], ignore_index=True)
@@ -319,7 +320,7 @@ class WatchHistory(Repository):
             self.videos.add(videos_data)
             new_urls = list(set(video_urls) - set(self.videos.content['id']))
             if new_urls is not []:
-                self.get_api(new_urls)
+                self.get_api(new_urls, self.youtube)
         else:
             self.get_api(video_urls)
         self.sql.write('damaged_urls', self.damaged_urls)
