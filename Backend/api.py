@@ -36,7 +36,8 @@ def get_channels_info(channels_ids, youtube):
 
 
 def main():
-    pass
+    youtube = set_up()
+    print(get_videos_info(['Ks-_Mh1QhMc'], youtube))
 
 
 if __name__ == '__main__':
