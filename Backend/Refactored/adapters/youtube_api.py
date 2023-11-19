@@ -1,13 +1,12 @@
 from googleapiclient.discovery import build
-import pandas as pd
 import json
 
 
 class Youtube_API:
     def __init__(self) -> None:
-        pass
+        self.youtube = self.set_up()
 
-    def set_up() -> object:
+    def set_up(self) -> object:
         try:
             api_file = open('API.txt', 'r')
         except FileNotFoundError as e:
@@ -18,19 +17,19 @@ class Youtube_API:
         except Exception as e:
             raise e
 
-    def get_videos_info(video_ids, youtube) -> json:
-        response = youtube.videos().list(part='snippet,contentDetails,statistics',
-                                         id=','.join(video_ids)).execute()
+    def get_videos_info(self, video_ids) -> json:
+        response = self.youtube.videos().list(part='snippet,contentDetails,statistics',
+                                              id=','.join(video_ids)).execute()
         if response.get('items'):
             formatted_json = response.get('items')
             return formatted_json
         else:
             return []
 
-    def get_channels_info(channels_ids, youtube) -> json:
+    def get_channels_info(self, channels_ids,) -> json:
 
-        response = youtube.channels().list(part='snippet,statistics,brandingSettings,contentDetails',
-                                           id=','.join(channels_ids)).execute()
+        response = self.youtube.channels().list(part='snippet,statistics,brandingSettings,contentDetails',
+                                                id=','.join(channels_ids)).execute()
         if response.get('items'):
             formatted_json = response.get('items')
             return formatted_json

@@ -11,58 +11,58 @@ engine = create_engine('sqlite:///history.db')
 inspector = inspect(engine)
 
 
-def extract_any(key: json, extracted_field: str) -> object:
-    """Function extracting any nested data from json field
+# def extract_any(key: json, extracted_field: str) -> object:
+#     """Function extracting any nested data from json field
 
-    Args:
-        column (json): JSON object
-        extracted_field (str): key of extracted field
+#     Args:
+#         column (json): JSON object
+#         extracted_field (str): key of extracted field
 
-    Returns:
-        _type_: _description_
-    """
+#     Returns:
+#         _type_: _description_
+#     """
 
-    return key.get(extracted_field)
-
-
-def iso8601_to_timedelta(time: str) -> timedelta:
-    """Function converting iso8601 format to python timedelta
+#     return key.get(extracted_field)
 
 
-    Args:
-        time (str): time string in iso8601 format
+# def iso8601_to_timedelta(time: str) -> timedelta:
+#     """Function converting iso8601 format to python timedelta
 
-    Returns:
-        timedelta: converted time
-    """
-    time = time.strip('PT')
-    if 'DT' in time:
-        days = time.split('DT')[0]
-        days = int(days)
-        time = time.split('DT')[1]
-    else:
-        days = 0
-    if 'H' in time:
-        hours = time.split('H')[0]
-        hours = int(hours)
-        time = time.split('H')[1]
-    else:
-        hours = 0
-    if 'M' in time:
-        minutes = time.split('M')[0]
-        minutes = int(minutes)
-        time = time.split('M')[1]
-    else:
-        minutes = 0
-    if 'S' in time:
-        seconds = time.split('S')[0]
-        seconds = int(seconds)
-        time = time.split('S')[1]
-    else:
-        seconds = 0
-    duration = timedelta(days=days, hours=hours,
-                         minutes=minutes, seconds=seconds).total_seconds()
-    return duration
+
+#     Args:
+#         time (str): time string in iso8601 format
+
+#     Returns:
+#         timedelta: converted time
+#     """
+#     time = time.strip('PT')
+#     if 'DT' in time:
+#         days = time.split('DT')[0]
+#         days = int(days)
+#         time = time.split('DT')[1]
+#     else:
+#         days = 0
+#     if 'H' in time:
+#         hours = time.split('H')[0]
+#         hours = int(hours)
+#         time = time.split('H')[1]
+#     else:
+#         hours = 0
+#     if 'M' in time:
+#         minutes = time.split('M')[0]
+#         minutes = int(minutes)
+#         time = time.split('M')[1]
+#     else:
+#         minutes = 0
+#     if 'S' in time:
+#         seconds = time.split('S')[0]
+#         seconds = int(seconds)
+#         time = time.split('S')[1]
+#     else:
+#         seconds = 0
+#     duration = timedelta(days=days, hours=hours,
+#                          minutes=minutes, seconds=seconds).total_seconds()
+#     return duration
 
 
 # class Videos:
@@ -171,21 +171,21 @@ def iso8601_to_timedelta(time: str) -> timedelta:
 class WatchHistory(Repository):
     """Repository class to store and manipulte data about history for watched videos"""
 
-    def __init__(self) -> None:
-        self.dataStorage = JSONFIle('history.json')
-        self.watch_history = None
-        self.columns = [
-            'titleUrl',
-            'time',
-            'subtitles'
-        ]
-        self.videos = None
-        self.sql = SQLFile() #repo
-        self.youtube = api.set_up()
-        if inspector.has_table('damaged_urls'):
-            self.damaged_urls = self.sql.read('damaged_urls')
-        else:
-            self.damaged_urls = pd.DataFrame(columns=['id'])
+    # def __init__(self) -> None:
+    #     self.dataStorage = JSONFIle('history.json')
+    #     self.watch_history = None
+    #     self.columns = [
+    #         'titleUrl',
+    #         'time',
+    #         'subtitles'
+    #     ]
+    #     self.videos = None
+    #     self.sql = SQLFile() #repo
+    #     self.youtube = api.set_up()
+    #     if inspector.has_table('damaged_urls'):
+    #         self.damaged_urls = self.sql.read('damaged_urls')
+    #     else:
+    #         self.damaged_urls = pd.DataFrame(columns=['id'])
 
     # def extract_channel_id(self, subtitles: str) -> str or None:
     #     """Function to extract nested channelId from subtitles field.
@@ -194,7 +194,7 @@ class WatchHistory(Repository):
     #         subtitles (str): Subtitles filed in DataFrame
 
     #     Returns:
-    #         str or None: if subtitles filed is a list function returns channelId, else - None. 
+    #         str or None: if subtitles filed is a list function returns channelId, else - None.
     #     """
     #     if isinstance(subtitles, list):
     #         url = subtitles[0].get('url', None)
@@ -325,8 +325,8 @@ class WatchHistory(Repository):
     #     # channel_urls = list(filter(None, self.watch_history['url']))
     #     # channels_data = api.get_channels_info(channel_urls[0:50])
 
-    def save(self) -> None:
-        self.sql.write('videos', self.videos.content)
+    # def save(self) -> None:
+    #     self.sql.write('videos', self.videos.content)
 
 
 # TODO: write down all desired features
