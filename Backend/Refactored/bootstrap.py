@@ -1,6 +1,6 @@
 from adapters import file, youtube_api
 from domain.model import WatchHistory, Videos, Channels
-from service_layer import unit_of_work, data_manipulation
+from service_layer import unit_of_work, data_manipulation, logic
 import pandas as pd
 from tqdm import tqdm
 from icecream import ic
@@ -106,16 +106,18 @@ class Bootstrap:
                 progess_bar.update(1)
 
 
-def initialize():
+def initialize() -> Bootstrap:
     bootstrap = Bootstrap()
     bootstrap.create_domain_objects()
     bootstrap.create_dependencies()
     bootstrap.load_history()
     bootstrap.load_videos_from_DB_or_API()
+    return bootstrap
 
 
 def main():
-    initialize()
+    data = initialize()
+    ic(logic.average_video_duration(data.videos))
 
 
 if __name__ == '__main__':
