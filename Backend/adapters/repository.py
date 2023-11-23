@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from sqlalchemy import Engine
 import pandas as pd
+import logging
 
 
 class AbstractRepository(ABC):
@@ -28,7 +29,11 @@ class SqlRepostory(AbstractRepository):
         Returns:
             pd.DataFrame: Pandas DataFrame read from DB
         """
-        df = pd.read_sql_table(table_name, self.engine)
+        try:
+            df = pd.read_sql_table(table_name, self.engine)
+        except ValueError as e:
+            logging.error(e)
+            raise
         return df
 
     def write(self, table_name: str, data: pd.DataFrame):
@@ -38,4 +43,8 @@ class SqlRepostory(AbstractRepository):
             table_name (str): _description_
             data (pd.DataFrame): _description_
         """
-        data.to_sql(table_name, self.engine, if_exists="replace", index=False)
+        try:
+            data.to_sql(table_name, self.engine, if_exists="replace", index=False)
+        except ValueError as e:
+            logging.error(e)
+            raise
