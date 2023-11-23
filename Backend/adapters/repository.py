@@ -1,9 +1,9 @@
 from abc import ABC, abstractmethod
+from sqlalchemy import Engine
 import pandas as pd
 
 
 class AbstractRepository(ABC):
-
     @abstractmethod
     def read():
         ...
@@ -14,9 +14,9 @@ class AbstractRepository(ABC):
 
 
 class SqlRepostory(AbstractRepository):
-    '''Class to handle SQL manipulation'''
+    """Class to handle SQL manipulation"""
 
-    def __init__(self, engine) -> None:
+    def __init__(self, engine: Engine) -> None:
         self.engine = engine
 
     def read(self, table_name: str) -> pd.DataFrame:
@@ -38,4 +38,4 @@ class SqlRepostory(AbstractRepository):
             table_name (str): _description_
             data (pd.DataFrame): _description_
         """
-        data.to_sql(table_name, self.engine, if_exists='replace', index=False)
+        data.to_sql(table_name, self.engine, if_exists="replace", index=False)
