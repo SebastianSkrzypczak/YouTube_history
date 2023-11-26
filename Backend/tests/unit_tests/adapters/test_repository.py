@@ -1,5 +1,4 @@
 from pandas import DataFrame, testing
-from unittest.mock import Mock, patch
 from sqlalchemy import create_engine, MetaData, Table, Integer, Column, select, text
 from adapters.repository import SqlRepostory
 import pytest
