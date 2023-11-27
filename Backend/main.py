@@ -4,7 +4,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from starlette.templating import Jinja2Templates
 from pydantic import BaseModel
 import bootstrap
+import uvicorn
+import logging
 
+logging.basicConfig(filename="main.log", level=logging.INFO)
 
 app = FastAPI()
 
@@ -122,9 +125,11 @@ async def read_most_views_videos():
 
 
 def main():
-    import uvicorn
+    logging.info("sterted main.py")
 
     uvicorn.run(app, host="localhost", port=8000)
+
+    logging.info("appliaction finished")
 
 
 if __name__ == "__main__":

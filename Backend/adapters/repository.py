@@ -3,6 +3,8 @@ from sqlalchemy import Engine
 import pandas as pd
 import logging
 
+logger = logging.getLogger(__name__)
+
 
 class AbstractRepository(ABC):
     @abstractmethod
@@ -32,7 +34,7 @@ class SqlRepostory(AbstractRepository):
         try:
             df = pd.read_sql_table(table_name, self.engine)
         except ValueError as e:
-            logging.error(e)
+            logger.error(e)
             raise
         return df
 
@@ -46,5 +48,5 @@ class SqlRepostory(AbstractRepository):
         try:
             data.to_sql(table_name, self.engine, if_exists="replace", index=False)
         except ValueError as e:
-            logging.error(e)
+            logger.error(e)
             raise
