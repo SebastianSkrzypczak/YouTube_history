@@ -2,6 +2,8 @@ from abc import ABC, abstractmethod
 import logging
 import json
 
+logger = logging.getLogger(__name__)
+
 
 class AbstractFile(ABC):
     @abstractmethod
@@ -20,15 +22,14 @@ class JSONFIle:
             try:
                 lines = f.readlines()
             except FileNotFoundError as e:
-                logging.error(e)
+                logger.error(e)
                 raise
         json_lines = "".join(lines)
 
         try:
             json_data = json.loads(json_lines)
-            print(json_data)
         except json.JSONDecodeError as e:
-            logging.debug(e)
+            logger.debug(e)
             raise
 
         return json_data

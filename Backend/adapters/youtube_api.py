@@ -5,6 +5,8 @@ from os.path import abspath
 
 FILE_PATH = abspath(r"API.txt")
 
+logger = logging.getLogger(__name__)
+
 
 class Youtube_API:
     def __init__(self, file_path=FILE_PATH) -> None:
@@ -20,7 +22,7 @@ class Youtube_API:
         try:
             return build("youtube", "v3", developerKey=API_KEY)
         except Exception as e:
-            logging.error(e)
+            logger.error(e)
             raise e
 
     def get_videos_info(self, video_ids) -> json:

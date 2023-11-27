@@ -1,6 +1,7 @@
 import pandas as pd
 import json
 import tqdm
+import logging
 
 
 class Videos:
@@ -24,10 +25,12 @@ class Videos:
         )
 
     def add(self, videos_data: pd.DataFrame):
-        if videos_data is not []:
+        if not videos_data.empty:
             self.content = pd.concat(
                 [self.content, videos_data], axis=0, ignore_index=True
             )
+        else:
+            logging.debug("empty videos data")
 
 
 class Channels:

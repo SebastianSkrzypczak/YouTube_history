@@ -1,6 +1,6 @@
 {
     "kind": "youtube#video",
-    "etag": "dnXM0atptVSrZwshRuP5jAMTdX4",
+    "etag": "t7MTpXXU0f2ZvOeAN3cpuG92n6g",
     "id": "Ks-_Mh1QhMc",
     "snippet": {
       "publishedAt": "2012-10-01T15:27:35Z",
@@ -68,9 +68,9 @@
       "projection": "rectangular"
     },
     "statistics": {
-      "viewCount": "23902855",
-      "likeCount": "404946",
+      "viewCount": "23982325",
+      "likeCount": "406609",
       "favoriteCount": "0",
-      "commentCount": "9589"
+      "commentCount": "9595"
     }
   }
