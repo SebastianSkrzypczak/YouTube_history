@@ -1,7 +1,6 @@
-import pandas as pd
 import json
-import tqdm
 import logging
+import pandas as pd
 
 
 class Videos:
@@ -51,7 +50,7 @@ class Channels:
         ]
 
     def add(self, channels_data: json):
-        if channels_data is not []:
+        if channels_data:
             self.channels = pd.DataFrame(channels_data, columns=self.columns)
 
 

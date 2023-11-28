@@ -1,5 +1,6 @@
+"""This module defines the `Manager` class, which handles backend logic and converts returned data to JSON."""
+
 import json
-from icecream import ic
 from domain.model import Videos, WatchHistory
 from service_layer import logic
 

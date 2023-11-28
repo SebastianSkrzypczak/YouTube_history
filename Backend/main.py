@@ -1,11 +1,15 @@
+"""Module responsible for fastAPI application
+"""
+
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.templating import Jinja2Templates
 from pydantic import BaseModel
-import bootstrap
 import uvicorn
 import logging
+import bootstrap
+
 
 logging.basicConfig(filename="main.log", level=logging.INFO)
 
@@ -61,11 +65,11 @@ async def post_total_watch_time():
 
 @app.get("/most_viewed_videos")
 async def get_most_viewed_videos():
-    if "count" in cache.keys():
+    if "count" in cache:
         count = int(cache["most_viewed_videos"]["count"])
     else:
         count = 10
-    if "categories" in cache.keys():
+    if "categories" in cache:
         categories = cache["most_viewed_videos"]["categories"]
     else:
         categories = []

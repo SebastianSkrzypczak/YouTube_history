@@ -1,24 +1,27 @@
-from googleapiclient.discovery import build, Resource
+"""This module provides a class for interacting with the YouTube Data API to retrieve information
+about videos and channels."""
+
 import json
 import logging
-from os.path import abspath
+from googleapiclient.discovery import build, Resource
 
-FILE_PATH = abspath(r"API.txt")
+
+FILE_PATH = r"API.txt"
 
 logger = logging.getLogger(__name__)
 
 
 class Youtube_API:
-    def __init__(self, file_path=FILE_PATH) -> None:
+    def __init__(self, file_path: str = FILE_PATH) -> None:
         self.file_path = file_path
         self.youtube = self.set_up()
 
     def set_up(self) -> Resource:
         try:
-            api_file = open(self.file_path, "r")
+            with open(self.file_path, "r") as file:
+                API_KEY = file.readline()
         except FileNotFoundError as e:
             raise e
-        API_KEY = api_file.readline()
         try:
             return build("youtube", "v3", developerKey=API_KEY)
         except Exception as e:
@@ -52,5 +55,4 @@ class Youtube_API:
         if response.get("items"):
             formatted_json = response.get("items")
             return formatted_json
-        else:
-            return []
+        return []

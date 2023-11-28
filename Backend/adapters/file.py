@@ -1,3 +1,6 @@
+"""This module provides abstract and concrete classes for handling reading data from files.
+"""
+
 from abc import ABC, abstractmethod
 import logging
 import json
@@ -7,13 +10,11 @@ logger = logging.getLogger(__name__)
 
 class AbstractFile(ABC):
     @abstractmethod
-    def read():
+    def read(self):
         pass
 
 
 class JSONFIle:
-    """Class to handle JSON files"""
-
     def __init__(self, file_path: str) -> None:
         self.file = file_path
 

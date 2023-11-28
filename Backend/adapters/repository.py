@@ -1,15 +1,19 @@
+"""This module provides abstract and concrete classes for handling SQL manipulation using SQLAlchemy
+and Pandas for data processing."""
+
+import logging
+import pandas as pd
 from abc import ABC, abstractmethod
 from sqlalchemy import Engine
-import pandas as pd
-import logging
+
 
 logger = logging.getLogger(__name__)
 
 
 class AbstractRepository(ABC):
     @abstractmethod
-    def read():
-        ...
+    def read(self):
+        pass
 
     @abstractmethod
     def write(self) -> None:
@@ -23,7 +27,7 @@ class SqlRepostory(AbstractRepository):
         self.engine = engine
 
     def read(self, table_name: str) -> pd.DataFrame:
-        """function reading data from SQL DB to Pandas DataFrame
+        """Function reading data from SQL DB to Pandas DataFrame
 
         Args:
             table_name (str): name od an table in DB
