@@ -22,26 +22,26 @@ YouTube History Analyzer is a web application that empowers users to analyze the
 
 1. Clone the repository:
 
-    ```bash
-    git clone https://github.com/your-username/YouTube_history.git
-    ```
+   ```bash
+   git clone https://github.com/your-username/YouTube_history.git
+   ```
 
 2. Install the required dependencies:
 
-    ```bash
-    pip install -r requirements.txt
-    ```
-    
+   ```bash
+   pip install -r requirements.txt
+   ```
+
 3. Run backend application
-   
-    ```bash
-    uvicorn main:app
-    ```
+
+   ```bash
+   uvicorn main:app
+   ```
 
 4. Run frontend application
    ```bash
     npm run start
-    ```
+   ```
 
 ## 🚀 Usage
 
@@ -71,8 +71,8 @@ For inquiries, please contact: sebastian.skrzypczak98@gmail.com
 ## 📸 UI
 
 ![alt text](1.png)
+![alt text](2.png)
 
 ## Backend Architecture
 
-🚧 **WORK IN PROGRESS**
-
+![alt text](ARCHITECTURE.svg)

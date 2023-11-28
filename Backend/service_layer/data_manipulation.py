@@ -25,9 +25,7 @@ def iso8601_to_seconds(time: str) -> float:
     time = time.strip("PT")
     if "DT" in time:
         days = time.split("DT")[0]
-    print(time)
     time = time.strip("PT")
-    print(time)
     if "D" in time:
         days = time.split("D")[0]
         days = int(days)
