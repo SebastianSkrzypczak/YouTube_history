@@ -1,6 +1,15 @@
+"""This module provides functions for processing and transforming data related to YouTube video information.
+
+Functions:
+    - iso8601_to_timedelta: Convert ISO8601 duration format to Python timedelta.
+    - extract_any: Extract any nested data from a JSON field.
+    - extract_channel_id: Extract the nested channelId from the subtitles field.
+    - extract_video_id: Extract the videoId from the title_url string.
+    - JSON_to_DataFrame: Convert JSON data about a single video to a Pandas DataFrame."""
+
 import json
-import pandas as pd
 from datetime import timedelta
+import pandas as pd
 
 
 def iso8601_to_seconds(time: str) -> float:
@@ -13,12 +22,16 @@ def iso8601_to_seconds(time: str) -> float:
     Returns:
         timedelta: converted time
     """
+    time = time.strip("PT")
+    if "DT" in time:
+        days = time.split("DT")[0]
     print(time)
     time = time.strip("PT")
     print(time)
     if "D" in time:
         days = time.split("D")[0]
         days = int(days)
+        time = time.split("DT")[1]
         print(days)
         if "DT" in time:
             time = time.split("DT")[1]
@@ -26,22 +39,34 @@ def iso8601_to_seconds(time: str) -> float:
         days = 0
     if "H" in time:
         hours = time.split("H")[0]
+    if "H" in time:
+        hours = time.split("H")[0]
         hours = int(hours)
+        time = time.split("H")[1]
         time = time.split("H")[1]
     else:
         hours = 0
     if "M" in time:
         minutes = time.split("M")[0]
+    if "M" in time:
+        minutes = time.split("M")[0]
         minutes = int(minutes)
+        time = time.split("M")[1]
         time = time.split("M")[1]
     else:
         minutes = 0
     if "S" in time:
         seconds = time.split("S")[0]
+    if "S" in time:
+        seconds = time.split("S")[0]
         seconds = int(seconds)
+        time = time.split("S")[1]
         time = time.split("S")[1]
     else:
         seconds = 0
+    duration = timedelta(
+        days=days, hours=hours, minutes=minutes, seconds=seconds
+    ).total_seconds()
     duration = timedelta(
         days=days, hours=hours, minutes=minutes, seconds=seconds
     ).total_seconds()
@@ -62,7 +87,7 @@ def extract_any(key: json, extracted_field: str) -> object:
     return key.get(extracted_field)
 
 
-def extract_channel_id(subtitles: str) -> str or None:
+def extract_channel_id(subtitles: str) -> str | None:
     """Function to extract nested channelId from subtitles field.
 
     Args:
@@ -79,19 +104,18 @@ def extract_channel_id(subtitles: str) -> str or None:
         return None
 
 
-def extract_video_id(titleUrl: str) -> str or None:
-    """Function to extract videoID from titleUrl string.
+def extract_video_id(title_url: str) -> str or None:
+    """Function to extract videoID from title_url string.
 
     Args:
-        titleUrl (str): titleUrl filed in DataFrame
+        title_url (str): title_url filed in DataFrame
 
     Returns:
-        str or None: if titleUrl filed is a string function returns videoId, else - None.
+        str or None: if title_url filed is a string function returns videoId, else - None.
     """
-    if isinstance(titleUrl, str):
-        return titleUrl.split("=")[1]
-    else:
-        return None
+    if isinstance(title_url, str):
+        return title_url.split("=")[1]
+    return None
 
 
 def JSON_to_DataFrame(videos_data: json) -> pd.DataFrame or None:
@@ -123,11 +147,12 @@ def JSON_to_DataFrame(videos_data: json) -> pd.DataFrame or None:
         )
     else:
         return None
-    # Extracting nested values.
-    for key in columns.keys():
-        videos_pd[key] = videos_pd[columns[key]].apply(lambda x: extract_any(x, key))
-    # extracting double nested fields with thumbnails
 
+    # Extracting nested values.
+    for key in columns:
+        videos_pd[key] = videos_pd[columns[key]].apply(lambda x: extract_any(x, key))
+
+    # extracting double nested fields with thumbnails
     videos_pd["thumbnail"] = [
         extract_any(x, "url")
         for x in [extract_any(x, "high") for x in videos_pd["thumbnails"]]
@@ -139,6 +164,8 @@ def JSON_to_DataFrame(videos_data: json) -> pd.DataFrame or None:
 
     videos_pd["publishedAt"] = pd.to_datetime(videos_pd["publishedAt"], format="mixed")
 
-    videos_pd["duration"] = videos_pd["duration"].apply(lambda x: iso8601_to_seconds(x))
+    videos_pd["duration"] = videos_pd["duration"].apply(
+        lambda x: iso8601_to_timedelta(x)
+    )
 
     return videos_pd

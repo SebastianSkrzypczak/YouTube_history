@@ -1,6 +1,22 @@
+"""This module provides functions for analyzing and processing data related to YouTube video history.
+
+Functions:
+    - filter_videos_by: Filter videos based on a specified column and categories.
+    - filter_videos_by_date: Filter videos based on a date interval.
+    - any_analysis: Analyze any column in the data frame and return top occurrences.
+    - calculate_total_watch_time: Calculate the total watch time in the user's history.
+    - show_most_viewed_videos: Show the most viewed videos in the user's history.
+    - show_most_viewed_channels: Show the most viewed channels in the user's history.
+    - time_activity_analysis: Calculate the count of videos watched by hours.
+    - average_video_duration: Calculate the average video duration.
+    - key_words_title: Placeholder for a function (to be implemented).
+    - statistics_in_time: Analyze statistics in different years.
+    - average_break: Placeholder for a function (to be implemented).
+    - show_biggest_value_videos: Show videos with the biggest values in a specified column.
+"""
+
 from datetime import timedelta, datetime
 import pandas as pd
-from icecream import ic
 
 
 def filter_videos_by(
@@ -207,7 +223,6 @@ def time_activity_analysis(
 
 
 def average_video_duration(videos: pd.DataFrame):
-    # TODO: docstring
     return videos["duration"].mean()
 
 
@@ -220,7 +235,16 @@ def statistics_in_time(
     history: pd.DataFrame,
     videos: pd.DataFrame,
 ):
-    # TODO: docstring
+    """
+    Analyze statistics over different years.
+
+    Args:
+        history (pd.DataFrame): DataFrame of user history.
+        videos (pd.DataFrame): DataFrame with all videos in history.
+
+    Returns:
+        pd.DataFrame: DataFrame consisting of year-wise analytics, including title, count, and total watch time.
+    """
     watch_history = history.copy()
     years = set(watch_history["time"].dt.year)
     years_analytics = pd.DataFrame(
@@ -257,7 +281,18 @@ def average_break():
 def show_biggest_value_videos(
     column_name: str, history: pd.DataFrame, videos: pd.DataFrame, count: int = 10
 ):
-    # TODO: docstring
+    """
+    Show videos with the biggest values in a specified column.
+
+    Args:
+        column_name (str): Name of the column to be analyzed.
+        history (pd.DataFrame): DataFrame with user history.
+        videos (pd.DataFrame): DataFrame with all videos in history.
+        count (int, optional): How many of the top occurrences should be returned. Defaults to 10.
+
+    Returns:
+        pd.DataFrame: DataFrame consisting of videos with the biggest values in the specified column.
+    """
     merged = history.merge(videos, how="inner", left_on="titleUrl", right_on="id")
     columns_to_drop = set(merged.columns) - set([column_name, "id", "title"])
     merged = merged.drop_duplicates(subset="id")
@@ -266,8 +301,3 @@ def show_biggest_value_videos(
     merged = merged.sort_values(by=column_name, ascending=False).head(count)
     merged = merged.drop(columns=columns_to_drop)
     return merged
-
-
-# TODO: gridcallendar
-# TODO: radar
-# TODO: pie
