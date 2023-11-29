@@ -13,11 +13,7 @@ from datetime import timedelta
 import pandas as pd
 
 
-<<<<<<< HEAD
 def iso8601_to_seconds(time: str) -> float:
-=======
-def iso8601_to_seconds(time: str) -> timedelta:
->>>>>>> tests
     """Function converting iso8601 format to python timedelta
 
 
@@ -27,54 +23,6 @@ def iso8601_to_seconds(time: str) -> timedelta:
     Returns:
         timedelta: converted time
     """
-<<<<<<< HEAD
-    time = time.strip("PT")
-    if "DT" in time:
-        days = time.split("DT")[0]
-    time = time.strip("PT")
-    if "D" in time:
-        days = time.split("D")[0]
-        days = int(days)
-        time = time.split("DT")[1]
-        print(days)
-        if "DT" in time:
-            time = time.split("DT")[1]
-    else:
-        days = 0
-    if "H" in time:
-        hours = time.split("H")[0]
-    if "H" in time:
-        hours = time.split("H")[0]
-        hours = int(hours)
-        time = time.split("H")[1]
-        time = time.split("H")[1]
-    else:
-        hours = 0
-    if "M" in time:
-        minutes = time.split("M")[0]
-    if "M" in time:
-        minutes = time.split("M")[0]
-        minutes = int(minutes)
-        time = time.split("M")[1]
-        time = time.split("M")[1]
-    else:
-        minutes = 0
-    if "S" in time:
-        seconds = time.split("S")[0]
-    if "S" in time:
-        seconds = time.split("S")[0]
-        seconds = int(seconds)
-        time = time.split("S")[1]
-        time = time.split("S")[1]
-    else:
-        seconds = 0
-    duration = timedelta(
-        days=days, hours=hours, minutes=minutes, seconds=seconds
-    ).total_seconds()
-    duration = timedelta(
-        days=days, hours=hours, minutes=minutes, seconds=seconds
-    ).total_seconds()
-=======
 
     if not time:
         raise ValueError
@@ -95,7 +43,6 @@ def iso8601_to_seconds(time: str) -> timedelta:
         days=days, hours=hours, minutes=minutes, seconds=seconds
     ).total_seconds()
 
->>>>>>> tests
     return duration
 
 
