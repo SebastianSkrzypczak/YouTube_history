@@ -1,18 +1,19 @@
 """This module provides functions for processing and transforming data related to YouTube video information.
 
 Functions:
-    - iso8601_to_timedelta: Convert ISO8601 duration format to Python timedelta.
+    - iso8601_to_seconds: Convert ISO8601 duration format to Python timedelta.
     - extract_any: Extract any nested data from a JSON field.
     - extract_channel_id: Extract the nested channelId from the subtitles field.
     - extract_video_id: Extract the videoId from the title_url string.
     - JSON_to_DataFrame: Convert JSON data about a single video to a Pandas DataFrame."""
 
 import json
+import re
 from datetime import timedelta
 import pandas as pd
 
 
-def iso8601_to_timedelta(time: str) -> timedelta:
+def iso8601_to_seconds(time: str) -> timedelta:
     """Function converting iso8601 format to python timedelta
 
 
@@ -22,38 +23,30 @@ def iso8601_to_timedelta(time: str) -> timedelta:
     Returns:
         timedelta: converted time
     """
-    time = time.strip("PT")
-    if "DT" in time:
-        days = time.split("DT")[0]
-        days = int(days)
-        time = time.split("DT")[1]
+
+    if not time:
+        raise ValueError
+
+    pattern = r"P(?:(?P<days>\d+)D)?T?(?:(?P<hours>\d+)H)?(?:(?P<minutes>\d+)M)?(?:(?P<seconds>\d+)S)?"
+
+    match = re.match(pattern, time)
+
+    if not match:
+        raise ValueError
     else:
-        days = 0
-    if "H" in time:
-        hours = time.split("H")[0]
-        hours = int(hours)
-        time = time.split("H")[1]
-    else:
-        hours = 0
-    if "M" in time:
-        minutes = time.split("M")[0]
-        minutes = int(minutes)
-        time = time.split("M")[1]
-    else:
-        minutes = 0
-    if "S" in time:
-        seconds = time.split("S")[0]
-        seconds = int(seconds)
-        time = time.split("S")[1]
-    else:
-        seconds = 0
+        days = int(match.group("days")) if match.group("days") else 0
+        hours = int(match.group("hours")) if match.group("hours") else 0
+        minutes = int(match.group("minutes")) if match.group("minutes") else 0
+        seconds = int(match.group("seconds")) if match.group("seconds") else 0
+
     duration = timedelta(
         days=days, hours=hours, minutes=minutes, seconds=seconds
     ).total_seconds()
+
     return duration
 
 
-def extract_any(key: json, extracted_field: str) -> object:
+def extract_any(dict: json, extracted_field: str) -> object:
     """Function extracting any nested data from json field
 
     Args:
@@ -63,8 +56,7 @@ def extract_any(key: json, extracted_field: str) -> object:
     Returns:
         _type_: _description_
     """
-
-    return key.get(extracted_field)
+    return dict.get(extracted_field)
 
 
 def extract_channel_id(subtitles: str) -> str | None:
@@ -105,47 +97,44 @@ def JSON_to_DataFrame(videos_data: json) -> pd.DataFrame or None:
         videos_data (json): File consisting of history of watched videos
 
     Returns:
-        pd.DataFrame or None: If history file is empty function will return None, else - converted data in DatFrame
+        pd.DataFrame or None: If data is empty function will return None, else - converted data in DatFrame
     """
 
     # Dictionary with nested fields as keys and their parents as values.
-    columns = {
-        "title": "snippet",
-        "publishedAt": "snippet",
-        "channelId": "snippet",
-        "categoryId": "snippet",
-        "duration": "contentDetails",
-        "viewCount": "statistics",
-        "likeCount": "statistics",
-        "thumbnails": "snippet",
+    data = {
+        "id": "id",
+        "title": "snippet.title",
+        "publishedAt": "snippet.publishedAt",
+        "channelId": "snippet.channelId",
+        "categoryId": "snippet.categoryId",
+        "duration": "contentDetails.duration",
+        "viewCount": "statistics.viewCount",
+        "likeCount": "statistics.likeCount",
+        "thumbnail": "snippet.thumbnails.standard.url",
     }
 
-    if videos_data != []:
-        videos_pd = pd.DataFrame(
-            videos_data,
-            columns=["id", "snippet", "contentDetails", "statistics", "thumbnails"],
-        )
+    if videos_data:
+        normalized_pd = pd.json_normalize(videos_data)
     else:
         return None
-
-    # Extracting nested values.
-    for key in columns:
-        videos_pd[key] = videos_pd[columns[key]].apply(lambda x: extract_any(x, key))
-
-    # extracting double nested fields with thumbnails
-    videos_pd["thumbnail"] = [
-        extract_any(x, "url")
-        for x in [extract_any(x, "high") for x in videos_pd["thumbnails"]]
-    ]
-
-    videos_pd = videos_pd.drop(
-        columns=["snippet", "contentDetails", "statistics", "thumbnails"]
+    videos_pd = pd.DataFrame(
+        columns=[
+            "id",
+            "title",
+            "publishedAt",
+            "channelId",
+            "categoryId",
+            "duration",
+            "viewCount",
+            "likeCount",
+            "thumbnail",
+        ]
     )
+    for key in data:
+        videos_pd[key] = normalized_pd[data[key]]
 
     videos_pd["publishedAt"] = pd.to_datetime(videos_pd["publishedAt"], format="mixed")
 
-    videos_pd["duration"] = videos_pd["duration"].apply(
-        lambda x: iso8601_to_timedelta(x)
-    )
+    videos_pd["duration"] = videos_pd["duration"].apply(lambda x: iso8601_to_seconds(x))
 
     return videos_pd
